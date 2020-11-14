@@ -28,33 +28,26 @@ generates:
       - "typescript-resolvers"
     config:
       allowParentTypeOverride: true
-      contextType: ../server#GraphQLContext
+      contextType: ../index#GraphQLContext
       noSchemaStitching: true
       mappers:
-        Dive: ./dive#IDive
-        InputDive: ./dive#IInputDive
+        Dive: ../objects/dive#IDive
+        InputDive: ../objects/dive#IInputDive
+        UserFlow: ../objects/userFlow#IUserFlow
+        InputUserFlow: ../objects/userFlow#IInputUserFlow
+        Flow: ../objects/flow#IFlow
+        InputFlow: ../objects/flow#IInputFlow
+        FlowItem: ../objects/flowItem#IFlowItem
+        InputFlowItem: ../objects/flowItem#IInputFlowItem
+        FlowItemconnection: ../objects/flowItemConnection#IFlowItemConnection
+        InputFlowItemconnection: ../objects/flowItemConnection#IInputFlowItemConnection
+        Item: ../objects/item#IItem
+        InputItem: ../objects/item#IInputItem
+        User: ../objects/user#IUser
+        InputUser: ../objects/user#IInputUser
+        Useritem: ../objects/userItem#IUserItem
+        InputUseritem: ../objects/userItem#IInputUserItem
 
-        Flow: ./flow#IFlow
-        InputFlow: ./flow#IInputFlow
-
-        Flowitem: ./flowitem#IFlowitem
-        InputFlowitem: ./flowitem#IInputFlowitem
-
-        Flowitemconnection: ./flowItemConnection#IFlowItemConnection
-        InputFlowitemconnection: ./flowItemConnection#IInputFlowItemConnection
-
-        Item: ./item#IItem
-        InputItem: ./item#IInputItem
-
-        User: ./user#IUser
-        InputUser: ./user#IInputUser
-
-        Useritem: ./userItem#IUserItem
-        InputUseritem: ./userItem#IInputUserItem
-
-        Entry: ./entry#IEntry
-        InputEntry: ./entry#IInputEntry
-        
       scalars:
         Date: string
   ../back/src/generated/modules.d.ts:

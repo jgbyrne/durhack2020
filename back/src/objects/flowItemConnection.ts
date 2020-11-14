@@ -1,4 +1,5 @@
 import {gql} from "apollo-server-express";
+import {FlowItemConnection, FlowItemConnectionResolvers, InputFlowItemConnection, Scalars} from "../generated/graphql";
 
 export const flowItemConnectionTypes = gql`
 
@@ -21,7 +22,9 @@ export const flowItemConnectionTypes = gql`
     }
 `
 
-type IFlowConnection = any // define in terms of gql types
-type IInputFlowItemConnection = any
+export type IFlowItemConnection =
+    Omit<FlowItemConnection, "from" | "to" | "flow">
+    & { flow: Scalars["ID"], from: Scalars["ID"], to: Scalars["ID"] }
+export type IInputFlowItemConnection = InputFlowItemConnection
 
-export const flowItemConnectionResolvers = {}
+export const flowItemConnectionResolvers: FlowItemConnectionResolvers = {}

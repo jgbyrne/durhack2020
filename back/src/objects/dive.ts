@@ -1,4 +1,5 @@
 import {gql} from "apollo-server-express";
+import {Dive, DiveResolvers, InputDive, Scalars} from "../generated/graphql";
 
 export const diveTypes = gql`
 
@@ -21,7 +22,7 @@ export const diveTypes = gql`
     }
 `
 
-type IDive = any // define in terms of gql types
-type IInputDive = any
+export type IDive = Omit<Dive, "user" | "flow"> & { user: Scalars["ID"], flow: Scalars["ID"] }
+export type IInputDive = InputDive
 
-export const diveResolvers = {}
+export const diveResolvers: DiveResolvers = {}

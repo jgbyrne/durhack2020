@@ -1,4 +1,5 @@
 import {gql} from "apollo-server-express";
+import {InputUserItem, Scalars, UserItem, UserItemResolvers} from "../generated/graphql";
 
 export const userItemTypes = gql`
 
@@ -21,7 +22,7 @@ export const userItemTypes = gql`
     }
 `
 
-type IUserItem = any // define in terms of gql types
-type IInputUserItem = any
+export type IUserItem = Omit<UserItem, "user" | "item"> & { user: Scalars["ID"], item: Scalars["ID"] }
+export type IInputUserItem = InputUserItem
 
-export const userItemResolvers = {}
+export const userItemResolvers: UserItemResolvers = {}
