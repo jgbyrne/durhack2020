@@ -1,6 +1,7 @@
 import React from 'react';
 import './App.css';
 import FlowMap from "./components/FlowMap";
+import {LoginProvider} from "./LoginContext";
 
 let flowItemData = [{
     name: "Tempest Sonata",
@@ -26,10 +27,11 @@ let flowItemConnectionData = [
 ];
 
 export const App = () =>
-    <div className="App">
-        <FlowMap
-            flowItemData={flowItemData}
-            flowItemConnectionData={flowItemConnectionData}
-        />
-    </div>
-
+    <LoginProvider>
+        <div className="App">
+            <FlowMap
+                flowItemData={flowItemData}
+                flowItemConnectionData={flowItemConnectionData}
+            />
+        </div>
+    </LoginProvider>
