@@ -25,13 +25,13 @@ const typeDefs: DocumentNode[] = [
 ];
 
 const resolvers: Resolvers = {
-    diveResolvers,
-    flowResolvers,
-    flowItemResolvers,
-    flowItemConnectionResolvers,
-    itemResolvers,
-    userResolvers,
-    userItemResolvers,
+    Dive: diveResolvers,
+    Flow: flowResolvers,
+    FlowItem: flowItemResolvers,
+    FlowItemConnection: flowItemConnectionResolvers,
+    Item: itemResolvers,
+    User: userResolvers,
+    UserItem: userItemResolvers,
 
     Query: queryResolver,
     Mutation: mutationResolver,
