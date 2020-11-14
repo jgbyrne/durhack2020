@@ -1,37 +1,43 @@
-import React, {FC} from 'react';
+import React, {FC, useMemo, useState} from 'react';
 import './FlowMap.css';
 import FlowItem from "./FlowItem";
+import {springLayout} from "../logic/layout";
 
-type FlowMap = {}
+type FlowItem = {
+    _id: string,
+    description: string,
+    thumbnail: string,
+    name: string,
+}
 
-let flowItemData = [{
-    name: "Tempest Sonata",
-    description: "A more complex piece, ideal for the initiated",
-    thumbnail: "https://picsum.photos/200/200"
-}, {
-    name: "Moonlight Sonata 1",
-    description: "A gentle and melancholy introduction to Beethoven",
-    thumbnail: "https://picsum.photos/200/200"
-}, {
-    name: "Moonlight Sonata 1",
-    description: "A gentle and melancholy introduction to Beethoven",
-    thumbnail: "https://picsum.photos/200/200"
-}, {
-    name: "Moonlight Sonata 1",
-    description: "A gentle and melancholy introduction to Beethoven",
-    thumbnail: "https://picsum.photos/200/200"
-}, {
-    name: "Moonlight Sonata 1",
-    description: "A gentle and melancholy introduction to Beethoven",
-    thumbnail: "https://picsum.photos/200/200"
-}];
+type FlowMap = {
+    flowItemData: FlowItem[],
+}
 
 
 const FlowMap: FC<FlowMap> = props => {
-    return <div className="FlowMap">
-        {flowItemData.map(e =>
-            <FlowItem {...{...e, x: 0, y: 1}}/>
-        )}
+    let [zoomLevel, setZoomLevel] = useState<number>(1.0);
+
+    let flowItemPositions = useMemo(() =>
+            springLayout(props.flowItemData.map(e => e._id), [
+                    {from: "A", to: "B"},
+                    {from: "B", to: "C"},
+                    {from: "B", to: "D"}
+                ]
+            ),
+        [props.flowItemData]
+    );
+
+
+    return <div
+        className="FlowMap"
+    >
+        <div className={"FlowMap-inner"}>
+            {props.flowItemData.map((a, i) =>
+                <FlowItem key={i} {...{...a, ...flowItemPositions[i]}}/>
+            )}
+        </div>
+
     </div>;
 };
 

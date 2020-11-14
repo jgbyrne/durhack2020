@@ -7,4 +7,6 @@
 .FlowMap-inner {
     width: 5000px;
     height: 5000px;
+    position: relative;
+    cursor: grab;
 }
