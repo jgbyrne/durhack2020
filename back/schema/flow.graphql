@@ -17,8 +17,8 @@ type Flow {
     name: String
     description: String
 
-    rootFlowItem: FlowItem!
-    flowItems: [FlowItem!]!
+    rootSize: Int!
+    flowItems: [FlowItem!]! # in order
     flowConnections: [FlowItemConnection!]!
 
     owner: User
