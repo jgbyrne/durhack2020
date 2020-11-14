@@ -1,0 +1,24 @@
+{
+  "compilerOptions": {
+    "target": "es5",
+    "module": "commonjs",
+    "outDir": "./bin/",
+    "strict": true,
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "strictFunctionTypes": true,
+    "alwaysStrict": true,
+    "noImplicitReturns": true,
+    "moduleResolution": "node",
+    "baseUrl": "./",
+    "esModuleInterop": true,
+    "allowJs": true
+  },
+  "include": [
+    "./src/**/*"
+  ],
+  "exclude": [
+    "./node_modules",
+    "**/*.test.ts"
+  ]
+}
