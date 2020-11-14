@@ -51,7 +51,7 @@ class Music:
            album_info = mbz.get_release_group_by_id(album_id,
                                                     includes=["artists"])["release-group"]
         except MbzError as e:
-            print(e)
+            print("MusicBrainz Error: {}".format(e), file=sys.stderr)
             return None
 
         name = album_info.get("title")
