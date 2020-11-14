@@ -1,0 +1,31 @@
+.FlowItem {
+    position: absolute;
+    width: 200px;
+    height: 200px;
+    background-color: white;
+    border-radius: 25%;
+    box-shadow: 0 0 30px #808080B0;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 140ms;
+}
+
+.FlowItem:hover {
+    transform: scale(0.97);
+}
+
+.FlowItem img {
+
+}
+
+.FlowItem .floaty-text {
+    position: absolute;
+    bottom: 0;
+    color: white;
+    text-shadow: 0 0 3px black;
+    margin: 10px;
+}
+
+.FlowItem .floaty-text .name {
+    font-size: 130%;
+}
