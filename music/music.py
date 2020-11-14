@@ -5,14 +5,16 @@ import requests
 import musicbrainzngs as mbz
 from musicbrainzngs.musicbrainz import ResponseError as MbzError
 
+DATA_PATH = "."
+
 class Music:
     def __init__(self):
-        self.conn = sqlite3.connect("music.db")
-        self.API_KEY = os.environ.get("LASTFM_API_KEY")
-        self.API_SECRET = os.environ.get("LASTFM_API_SECRET")
+        self.conn = sqlite3.connect("{}/music.db".format(DATA_PATH))
+        #self.API_KEY = os.environ.get("LASTFM_API_KEY")
+        #self.API_SECRET = os.environ.get("LASTFM_API_SECRET")
 
-        if not self.API_KEY or not self.API_SECRET:
-            print("Missing Key or Secret", file=sys.stderr)
+        #if not self.API_KEY or not self.API_SECRET:
+        #    print("Missing Key or Secret", file=sys.stderr)
 
         mbz.set_useragent("Durhack 2020", "0.0.1", "https://github.com/jgbyrne")
 
@@ -62,8 +64,53 @@ class Music:
         return {"album_id": album_id, "name": name, "year": year,
                 "artist_id": artist_id, "artist_name": artist_name}
 
+    def _download_art(self, album_id):
+        resp = requests.get("http://coverartarchive.org/release-group/{}".format(album_id))
+        if resp.status_code != 200:
+            return False
+
+        if data := resp.json():
+            if images := data.get("images")[0]:
+                if thumbs := images.get("thumbnails"):
+                    urls = (thumbs.get("small"), thumbs.get("large"))
+                    if all(urls):
+                        small, large = urls
+                        s_resp = requests.get(small)
+                        path = "{}/art/{}.small.png".format(DATA_PATH, album_id)
+                        with open(path, 'wb') as outf:
+                            outf.write(s_resp.content)
+                        del s_resp
+
+                        l_resp = requests.get(large)
+                        path = "{}/art/{}.large.png".format(DATA_PATH, album_id)
+                        with open(path, 'wb') as outf:
+                            outf.write(l_resp.content)
+                        del l_resp
+                        return True
+                    return False
+        else:
+            return False
+            
+
+    def get_album_art(self, album_id):
+        path = "{}/art/{}.large.png".format(DATA_PATH, album_id)
+        if not os.path.exists(path):
+            if not self._download_art(album_id):
+                return None
+
+        with open(path, 'rb') as inf:
+            return inf.read()
+
+    def get_album_thumbnail(self, album_id):
+        path = "{}/art/{}.small.png".format(DATA_PATH, album_id)
+        if not os.path.exists(path):
+            if not self._download_art(album_id):
+                return None
+
+        with open(path, 'rb') as inf:
+            return inf.read()
 
 if __name__ == "__main__":
     music = Music()
-    print(music.get_album("6e335887-60ba-38f0-95af-fae7774336bf"))
+    print(music.get_album_art("6e335887-60ba-38f0-95af-fae7774336bf"))
 
