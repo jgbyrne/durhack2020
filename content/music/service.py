@@ -22,22 +22,16 @@ class Music:
         conn.execute("CREATE TABLE albums (album_id TEXT PRIMARY KEY, name TEXT, year INTEGER, artist_id TEXT, artist_name TEXT)")
 
     def search(self, album_name):
-        network = pylast.LastFMNetwork(api_key=self.API_KEY, api_secret=self.API_SECRET)
-        albums = network.search_for_album(album_name)
-        results = albums.get_next_page()
-        
-        return [{"name": result.title, "artist_name": result.artist.name} for result in results]
-
-    def get_album_from_search_result(self, result):
-        if result.get("name") is None or result.get("artist_name") is None:
+        resp = mbz.search_release_groups(album_name)
+        if rgl := resp.get("release-group-list"):
+            resp = []
+            for result in rgl:
+                resp.append({"album_id": result["id"], "name": result["title"],
+                             "artist_name": result["artist-credit"][0]["artist"]["name"]})
+            return resp
+        else:
             return None
-        network = pylast.LastFMNetwork(api_key=self.API_KEY, api_secret=self.API_SECRET)
-        album = network.get_album(result["artist_name"], result["name"])
-        if mbid := album.get_mbid():
-            mbz_album = mbz.get_release_by_id(mbid, includes=["release-groups"])
-            return self.get_album(mbz_album["release"]["release-group"]["id"])
-        return None
- 
+
     def get_album(self, album_id):
         conn = sqlite3.connect("{}/music.db".format(self.path))
         c = conn.cursor()
