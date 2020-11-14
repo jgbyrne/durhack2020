@@ -2,6 +2,7 @@ import React, {FC, useMemo, useState} from 'react';
 import './FlowMap.css';
 import FlowItem from "./FlowItem";
 import {springLayout} from "../logic/layout";
+import {useGesture} from 'react-use-gesture';
 
 type FlowItem = {
     _id: string,
@@ -28,6 +29,7 @@ const FlowMap: FC<FlowMap> = props => {
         [props.flowItemData]
     );
 
+    useGesture
 
     return <div
         className="FlowMap"
