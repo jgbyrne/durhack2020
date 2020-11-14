@@ -1,4 +1,5 @@
 import {gql} from "apollo-server-express";
+import {InputItem, Item, ItemResolvers} from "../generated/graphql";
 
 export const itemTypes = gql`
 
@@ -15,10 +16,10 @@ export const itemTypes = gql`
 
         title: String!
         subtitle: String!
-        
+
         url: String!
         type: ItemType!
-        
+
         thumbnail: String!
         image: String!
 
@@ -36,7 +37,7 @@ export const itemTypes = gql`
 
 `
 
-type IItem = any // define in terms of gql types
-type IInputItem = any
+export type IItem = Omit<Item, "flowItem" | "flowItems"> // define in terms of gql types
+export type IInputItem = InputItem
 
-export const itemResolvers = {}
+export const itemResolvers: ItemResolvers = {}

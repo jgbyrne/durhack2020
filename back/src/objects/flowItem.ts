@@ -1,4 +1,5 @@
 import {gql} from "apollo-server-express";
+import {FlowItem, FlowItemResolvers, InputFlowItem, Scalars} from "../generated/graphql";
 
 export const flowItemTypes = gql`
 
@@ -18,7 +19,7 @@ export const flowItemTypes = gql`
     }
 `
 
-type IItemFlow = any // define in terms of gql types
-type IInputItemFlow = any
+export type IFlowItem = Omit<FlowItem, "flow" | "item"> & { flow: Scalars["ID"], item: Scalars["ID"] }
+export type IInputFlowItem = InputFlowItem
 
-export const flowItemResolvers = {}
+export const flowItemResolvers: FlowItemResolvers = {}

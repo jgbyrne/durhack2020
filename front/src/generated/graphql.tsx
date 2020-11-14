@@ -27,6 +27,18 @@ export type Dive = {
   createdAt: Scalars['Date'];
 };
 
+export type InputUserFlow = {
+  user?: Maybe<Scalars['ID']>;
+  flow?: Maybe<Scalars['ID']>;
+};
+
+export type UserFlow = {
+  __typename?: 'UserFlow';
+  _id: Scalars['ID'];
+  user: User;
+  flow: Flow;
+};
+
 
 export type InputFlow = {
   name: Scalars['String'];
@@ -38,7 +50,7 @@ export type InputFlow = {
 
 export type Flow = {
   __typename?: 'Flow';
-  _id?: Maybe<Scalars['ID']>;
+  _id: Scalars['ID'];
   name?: Maybe<Scalars['String']>;
   description?: Maybe<Scalars['String']>;
   rootSize: Scalars['Int'];
@@ -104,7 +116,7 @@ export enum ItemType {
 }
 
 export type InputUser = {
-  name?: Maybe<Scalars['String']>;
+  name: Scalars['String'];
 };
 
 export type User = {

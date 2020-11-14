@@ -1,4 +1,5 @@
 import {gql} from "apollo-server-express";
+import {Flow, FlowResolvers, InputFlow, Scalars} from "../generated/graphql";
 
 export const flowTypes = gql`
 
@@ -16,7 +17,7 @@ export const flowTypes = gql`
     }
 
     type Flow {
-        _id: ID
+        _id: ID!
 
         name: String
         description: String
@@ -30,7 +31,7 @@ export const flowTypes = gql`
     }
 `
 
-type IFlow = any // define in terms of gql types
-type IInputFlow = any
+export type IFlow = Omit<Flow, "flowConnections" | "flowItem" | "owner"> & { owner: Scalars["ID"] }
+export type IInputFlow = InputFlow
 
-export const flowResolvers = {}
+export const flowResolvers: FlowResolvers = {}

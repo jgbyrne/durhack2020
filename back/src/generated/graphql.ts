@@ -1,13 +1,13 @@
 import { GraphQLResolveInfo, GraphQLScalarType, GraphQLScalarTypeConfig } from 'graphql';
-import { IDive, IInputDive } from './dive';
-import { IFlow, IInputFlow } from './flow';
-import { IFlowitem, IInputFlowitem } from './flowitem';
-import { IFlowItemConnection, IInputFlowItemConnection } from './flowItemConnection';
-import { IItem, IInputItem } from './item';
-import { IUser, IInputUser } from './user';
-import { IUserItem, IInputUserItem } from './userItem';
-import { IEntry, IInputEntry } from './entry';
-import { GraphQLContext } from '../server';
+import { IDive, IInputDive } from '../objects/dive';
+import { IUserFlow, IInputUserFlow } from '../objects/userFlow';
+import { IFlow, IInputFlow } from '../objects/flow';
+import { IFlowItem, IInputFlowItem } from '../objects/flowItem';
+import { IFlowItemConnection, IInputFlowItemConnection } from '../objects/flowItemConnection';
+import { IItem, IInputItem } from '../objects/item';
+import { IUser, IInputUser } from '../objects/user';
+import { IUserItem, IInputUserItem } from '../objects/userItem';
+import { GraphQLContext } from '../index';
 export type Maybe<T> = T | null;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
@@ -37,6 +37,18 @@ export type Dive = {
   createdAt: Scalars['Date'];
 };
 
+export type InputUserFlow = {
+  user?: Maybe<Scalars['ID']>;
+  flow?: Maybe<Scalars['ID']>;
+};
+
+export type UserFlow = {
+  __typename?: 'UserFlow';
+  _id: Scalars['ID'];
+  user: User;
+  flow: Flow;
+};
+
 
 export type InputFlow = {
   name: Scalars['String'];
@@ -48,7 +60,7 @@ export type InputFlow = {
 
 export type Flow = {
   __typename?: 'Flow';
-  _id?: Maybe<Scalars['ID']>;
+  _id: Scalars['ID'];
   name?: Maybe<Scalars['String']>;
   description?: Maybe<Scalars['String']>;
   rootSize: Scalars['Int'];
@@ -114,7 +126,7 @@ export enum ItemType {
 }
 
 export type InputUser = {
-  name?: Maybe<Scalars['String']>;
+  name: Scalars['String'];
 };
 
 export type User = {
@@ -269,13 +281,15 @@ export type ResolversTypes = {
   InputDive: ResolverTypeWrapper<IInputDive>;
   ID: ResolverTypeWrapper<Scalars['ID']>;
   Dive: ResolverTypeWrapper<IDive>;
+  InputUserFlow: ResolverTypeWrapper<IInputUserFlow>;
+  UserFlow: ResolverTypeWrapper<IUserFlow>;
   Date: ResolverTypeWrapper<Scalars['Date']>;
   InputFlow: ResolverTypeWrapper<IInputFlow>;
   String: ResolverTypeWrapper<Scalars['String']>;
   Flow: ResolverTypeWrapper<IFlow>;
   Int: ResolverTypeWrapper<Scalars['Int']>;
-  InputFlowItem: InputFlowItem;
-  FlowItem: ResolverTypeWrapper<Omit<FlowItem, 'flow' | 'item'> & { flow: ResolversTypes['Flow'], item: ResolversTypes['Item'] }>;
+  InputFlowItem: ResolverTypeWrapper<IInputFlowItem>;
+  FlowItem: ResolverTypeWrapper<IFlowItem>;
   InputFlowItemConnection: InputFlowItemConnection;
   FlowItemConnection: ResolverTypeWrapper<Omit<FlowItemConnection, 'flow' | 'from' | 'to'> & { flow?: Maybe<ResolversTypes['Flow']>, from: ResolversTypes['FlowItem'], to: ResolversTypes['FlowItem'] }>;
   InputItem: ResolverTypeWrapper<IInputItem>;
@@ -295,13 +309,15 @@ export type ResolversParentTypes = {
   InputDive: IInputDive;
   ID: Scalars['ID'];
   Dive: IDive;
+  InputUserFlow: IInputUserFlow;
+  UserFlow: IUserFlow;
   Date: Scalars['Date'];
   InputFlow: IInputFlow;
   String: Scalars['String'];
   Flow: IFlow;
   Int: Scalars['Int'];
-  InputFlowItem: InputFlowItem;
-  FlowItem: Omit<FlowItem, 'flow' | 'item'> & { flow: ResolversParentTypes['Flow'], item: ResolversParentTypes['Item'] };
+  InputFlowItem: IInputFlowItem;
+  FlowItem: IFlowItem;
   InputFlowItemConnection: InputFlowItemConnection;
   FlowItemConnection: Omit<FlowItemConnection, 'flow' | 'from' | 'to'> & { flow?: Maybe<ResolversParentTypes['Flow']>, from: ResolversParentTypes['FlowItem'], to: ResolversParentTypes['FlowItem'] };
   InputItem: IInputItem;
@@ -323,12 +339,19 @@ export type DiveResolvers<ContextType = GraphQLContext, ParentType = ResolversPa
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
+export type UserFlowResolvers<ContextType = GraphQLContext, ParentType = ResolversParentTypes['UserFlow']> = {
+  _id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  user?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
+  flow?: Resolver<ResolversTypes['Flow'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
 export interface DateScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['Date'], any> {
   name: 'Date';
 }
 
 export type FlowResolvers<ContextType = GraphQLContext, ParentType = ResolversParentTypes['Flow']> = {
-  _id?: Resolver<Maybe<ResolversTypes['ID']>, ParentType, ContextType>;
+  _id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   description?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   rootSize?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
@@ -400,6 +423,7 @@ export type MutationResolvers<ContextType = GraphQLContext, ParentType = Resolve
 
 export type Resolvers<ContextType = GraphQLContext> = {
   Dive?: DiveResolvers<ContextType>;
+  UserFlow?: UserFlowResolvers<ContextType>;
   Date?: GraphQLScalarType;
   Flow?: FlowResolvers<ContextType>;
   FlowItem?: FlowItemResolvers<ContextType>;

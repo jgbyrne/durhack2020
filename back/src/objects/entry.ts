@@ -1,4 +1,5 @@
 import {gql} from "apollo-server-express";
+import {MutationResolvers, QueryResolvers} from "../generated/graphql";
 
 export const entryTypes = gql`
 
@@ -22,5 +23,5 @@ export const entryTypes = gql`
     }
 `
 
-export const queryResolver = {}
-export const mutationResolver = {}
+export const queryResolver: QueryResolvers = {}
+export const mutationResolver: MutationResolvers = {}

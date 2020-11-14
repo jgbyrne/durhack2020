@@ -6,11 +6,9 @@ import musicbrainzngs as mbz
 from musicbrainzngs.musicbrainz import ResponseError as MbzError
 import pylast
 
-DATA_PATH = "."
-
 class Music:
-    def __init__(self):
-        self.conn = sqlite3.connect("{}/music.db".format(DATA_PATH))
+    def __init__(self, path):
+        self.path = path
         self.API_KEY = os.environ.get("LASTFM_API_KEY")
         self.API_SECRET = os.environ.get("LASTFM_API_SECRET")
 
@@ -20,7 +18,8 @@ class Music:
         mbz.set_useragent("Durhack 2020", "0.0.1", "https://github.com/jgbyrne")
 
     def create_db(self):
-        self.conn.execute("CREATE TABLE albums (album_id TEXT PRIMARY KEY, name TEXT, year INTEGER, artist_id TEXT, artist_name TEXT)")
+        conn = sqlite3.connect("{}/music.db".format(self.path))
+        conn.execute("CREATE TABLE albums (album_id TEXT PRIMARY KEY, name TEXT, year INTEGER, artist_id TEXT, artist_name TEXT)")
 
     def search(self, album_name):
         network = pylast.LastFMNetwork(api_key=self.API_KEY, api_secret=self.API_SECRET)
@@ -40,7 +39,8 @@ class Music:
         return None
  
     def get_album(self, album_id):
-        c = self.conn.cursor()
+        conn = sqlite3.connect("{}/music.db".format(self.path))
+        c = conn.cursor()
         c.execute("SELECT * FROM albums WHERE album_id=?", (album_id,))
 
         if album := c.fetchone():
@@ -75,7 +75,7 @@ class Music:
 
         values = (album_id, name, year, artist_id, artist_name)
         c.execute("INSERT INTO albums VALUES (?,?,?,?,?);", values)
-        self.conn.commit()
+        conn.commit()
 
         return {"album_id": album_id, "name": name, "year": year,
                 "artist_id": artist_id, "artist_name": artist_name}
@@ -92,13 +92,13 @@ class Music:
                     if all(urls):
                         small, large = urls
                         s_resp = requests.get(small)
-                        path = "{}/art/{}.small.png".format(DATA_PATH, album_id)
+                        path = "{}/art/{}.small.png".format(self.path, album_id)
                         with open(path, 'wb') as outf:
                             outf.write(s_resp.content)
                         del s_resp
 
                         l_resp = requests.get(large)
-                        path = "{}/art/{}.large.png".format(DATA_PATH, album_id)
+                        path = "{}/art/{}.large.png".format(self.path, album_id)
                         with open(path, 'wb') as outf:
                             outf.write(l_resp.content)
                         del l_resp
@@ -109,7 +109,7 @@ class Music:
             
 
     def get_album_art(self, album_id):
-        path = "{}/art/{}.large.png".format(DATA_PATH, album_id)
+        path = "{}/art/{}.large.png".format(self.path, album_id)
         if not os.path.exists(path):
             if not self._download_art(album_id):
                 return None
@@ -118,7 +118,7 @@ class Music:
             return inf.read()
 
     def get_album_thumbnail(self, album_id):
-        path = "{}/art/{}.small.png".format(DATA_PATH, album_id)
+        path = "{}/art/{}.small.png".format(self.path, album_id)
         if not os.path.exists(path):
             if not self._download_art(album_id):
                 return None
@@ -127,6 +127,6 @@ class Music:
             return inf.read()
 
 if __name__ == "__main__":
-    music = Music()
+    music = Music(".")
     print(music.get_album_from_search_result(music.search("Filosofem")[0]))
 

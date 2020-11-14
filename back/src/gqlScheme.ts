@@ -9,12 +9,12 @@ import {flowItemConnectionResolvers, flowItemConnectionTypes} from "./objects/fl
 import {itemResolvers, itemTypes} from "./objects/item";
 import {userResolvers, userTypes} from "./objects/user";
 import {userItemResolvers, userItemTypes} from "./objects/userItem";
-
-type Resolvers = any;
-type IResolvers = any;
+import {Resolvers} from "./generated/graphql";
+import {userFlowResolvers, userFlowTypes} from "./objects/userFlow";
 
 const typeDefs: DocumentNode[] = [
     diveTypes,
+    userFlowTypes,
     flowTypes,
     flowItemTypes,
     flowItemConnectionTypes,
@@ -32,6 +32,7 @@ const resolvers: Resolvers = {
     Item: itemResolvers,
     User: userResolvers,
     UserItem: userItemResolvers,
+    UserFlow: userFlowResolvers,
 
     Query: queryResolver,
     Mutation: mutationResolver,
@@ -56,5 +57,5 @@ const resolvers: Resolvers = {
 
 export const gqlSchema = makeExecutableSchema<GraphQLContext>({
     typeDefs: typeDefs,
-    resolvers: resolvers as IResolvers,
+    resolvers: resolvers as any,
 });

@@ -1,9 +1,10 @@
 import {gql} from "apollo-server-express";
+import {InputUser, User, UserResolvers} from "../generated/graphql";
 
 export const userTypes = gql`
 
     input InputUser {
-        name: String
+        name: String!
     }
 
 
@@ -13,11 +14,12 @@ export const userTypes = gql`
 
         flows: [Flow!]!
 
+
     }
 
 `
 
-type IUser = any // define in terms of gql types
-type IInputUser = any
+export type IUser = Omit<User, "flows"> // define in terms of gql types
+export type IInputUser = InputUser
 
-export const userResolvers = {}
+export const userResolvers: UserResolvers = {}
