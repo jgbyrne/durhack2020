@@ -1,0 +1,34 @@
+type Item {
+    _id: ID!
+
+    name: String!
+    url: String!
+    type: ItemTypes!
+    thumbnail: String! #computed at run time
+}
+
+
+enum ItemTypes {
+    Song
+    Youtube
+}
+
+type FlowItem {
+    _id: String!
+    flow: ID!
+    item: ID!
+
+    description: String!
+
+}
+
+type FlowItemConnection {
+    _id: ID!
+    flow: ID!
+
+    description: String!
+
+    from: FlowItem!
+    to: FlowItem!
+
+}

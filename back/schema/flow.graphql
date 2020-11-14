@@ -1,0 +1,14 @@
+scalar Date
+
+type Flow {
+    _id: ID
+
+    name: String
+    description: String
+
+    flowItems: [FlowItem!]!
+    flowConnections: [FlowItemConnection!]!
+
+    owner: ID
+
+}
