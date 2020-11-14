@@ -13,12 +13,9 @@ config()
 const app = express();
 
 app.use(cookieParser());
-app.use(helmet());
+// app.use(helmet());
 app.use(compression());
-
-if (process.env.NODE_ENV === "development")
-    app.use(morgan("dev"));
-
+app.use(morgan("dev"));
 app.disable("x-powered-by");
 
 const database = null;
