@@ -10,7 +10,7 @@ app = Flask(__name__)
 
 music_items = music.Music("./music")
 
-URL = "http://127.0.0.1:5000"
+URL = "http://127.0.0.1:7373"
 
 if not os.path.exists("items.db"):
     conn = sqlite3.connect("items.db")
