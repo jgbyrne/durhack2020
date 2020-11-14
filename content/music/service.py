@@ -4,16 +4,16 @@ import sys
 import requests
 import musicbrainzngs as mbz
 from musicbrainzngs.musicbrainz import ResponseError as MbzError
-import pylast
+#import pylast
 
 class Music:
     def __init__(self, path):
         self.path = path
-        self.API_KEY = os.environ.get("LASTFM_API_KEY")
-        self.API_SECRET = os.environ.get("LASTFM_API_SECRET")
+        #self.API_KEY = os.environ.get("LASTFM_API_KEY")
+        #self.API_SECRET = os.environ.get("LASTFM_API_SECRET")
 
-        if not self.API_KEY or not self.API_SECRET:
-            print("Missing Key or Secret", file=sys.stderr)
+        #if not self.API_KEY or not self.API_SECRET:
+        #    print("Missing Key or Secret", file=sys.stderr)
 
         mbz.set_useragent("Durhack 2020", "0.0.1", "https://github.com/jgbyrne")
 
