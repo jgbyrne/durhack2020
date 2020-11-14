@@ -2,22 +2,20 @@ import {ApolloServer} from "apollo-server-express";
 import {ExpressContext} from "apollo-server-express/dist/ApolloServer";
 import compression from "compression";
 import cookieParser from "cookie-parser";
-import "dotenv/config";
 import express from "express";
 import helmet from "helmet";
 import morgan from "morgan";
 import {gqlSchema} from "./gqlScheme";
+import {config} from "dotenv";
 
+config()
 
 const app = express();
 
 app.use(cookieParser());
-app.use(helmet());
+// app.use(helmet());
 app.use(compression());
-
-if (process.env.NODE_ENV === "development")
-    app.use(morgan("dev"));
-
+app.use(morgan("dev"));
 app.disable("x-powered-by");
 
 const database = null;
@@ -45,4 +43,3 @@ const port = process.env.PORT || 4000;
 app.listen(port, () => {
     console.log(`Starting server on port ${port}`);
 });
-
