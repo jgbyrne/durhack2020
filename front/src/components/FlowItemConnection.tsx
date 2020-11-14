@@ -12,19 +12,26 @@ type LayoutFlowItemConnection = {
 
 const FlowItemConnection: FC<LayoutFlowItemConnection> = props => {
     const lowerX = Math.min(props.fromX, props.toX);
-    const upperX = Math.min(props.fromX, props.toX);
-    const lowerY = Math.max(props.fromX, props.toX);
-    const upperY = Math.max(props.fromX, props.toX);
+    const upperX = Math.max(props.fromX, props.toX);
+    const lowerY = Math.min(props.fromY, props.toY);
+    const upperY = Math.max(props.fromY, props.toY);
+
+    const flipX = Math.sign(props.toX - props.fromX);
+    const flipY = Math.sign(props.toY - props.fromY);
+
+    console.log(lowerX, upperX, lowerY, upperY);
 
     return <svg className="FlowItemConnection"
                 style={{
                     position: "absolute",
-                    left: `${lowerX}px`,
-                    top: `${lowerY}px`,
+                    zIndex: -1,
+                    left: `${lowerX + 100}px`,
+                    top: `${lowerY + 100}px`,
                     width: `${upperX - lowerX}px`,
                     height: `${upperY - lowerY}px`
                 }}>
-        <line x1="0" x2="0" y1="100%" y2="100%"/>
+        <line x1={`${50 + 50 * flipX}%`} y1={`${50 + 50 * flipY}%`} x2={`${50 - 50 * flipX}%`}
+              y2={`${50 - 50 * flipY}%`} style={{width: "100%", stroke: "rgb(128,205,255)", strokeWidth: "5"}}/>
     </svg>;
 };
 
