@@ -25,13 +25,11 @@ let flowItemConnectionData = [
     {_id: "2", from: "B", to: "D"}
 ];
 
-function App() {
-    return (
-        <div className="App">
-            <FlowMap flowItemData={flowItemData} flowItemConnectionData={flowItemConnectionData}>
-            </FlowMap>
-        </div>
-    );
-}
+export const App = () =>
+    <div className="App">
+        <FlowMap
+            flowItemData={flowItemData}
+            flowItemConnectionData={flowItemConnectionData}
+        />
+    </div>
 
-export default App;

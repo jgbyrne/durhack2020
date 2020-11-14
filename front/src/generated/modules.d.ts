@@ -1,9 +1,8 @@
-
 declare module '*/exampl.graphql' {
-  import { DocumentNode } from 'graphql';
-  const defaultDocument: DocumentNode;
-  
+    import {DocumentNode} from 'graphql';
+    const defaultDocument: DocumentNode;
 
-  export default defaultDocument;
+
+    export default defaultDocument;
 }
     

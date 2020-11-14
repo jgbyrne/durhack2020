@@ -25,8 +25,6 @@ type FlowMap = {
 }
 
 const FlowMap: FC<FlowMap> = props => {
-    let [zoomLevel, setZoomLevel] = useState<number>(1.0);
-    let [drag, setDrag] = useState<boolean>(false);
 
     type OffsetSpring = {
         left: number,
