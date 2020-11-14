@@ -11,7 +11,7 @@
 }
 
 .FlowItem:hover {
-    transform: scale(0.97);
+    transform: scale(1.03);
 }
 
 .FlowItem img {
@@ -19,6 +19,12 @@
     height: 100%;
     object-fit: scale-down;
     border-radius: 25%;
+    user-drag: none;
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-drag: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
 }
 
 .FlowItem .floaty-text {
@@ -27,6 +33,11 @@
     color: black;
     transform: translateY(100%);
     font-weight: bold;
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-drag: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
 }
 
 .FlowItem .floaty-text .name {

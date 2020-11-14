@@ -19,11 +19,16 @@ let flowItemData = [{
     _id: "C",
 }];
 
+let flowItemConnectionData = [
+    {_id: "0", from: "A", to: "B"},
+    {_id: "1", from: "B", to: "C"},
+    {_id: "2", from: "B", to: "D"}
+];
 
 function App() {
     return (
         <div className="App">
-            <FlowMap flowItemData={flowItemData}>
+            <FlowMap flowItemData={flowItemData} flowItemConnectionData={flowItemConnectionData}>
             </FlowMap>
         </div>
     );
