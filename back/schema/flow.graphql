@@ -1,4 +1,15 @@
-scalar Date
+scalar Date # transmitted as a ISO formatted string
+
+input InputFlow {
+
+    name: String!
+    description: String!
+
+    owner: ID
+    flowItems: [InputFlowItem!]! # first is the root
+    flowItemConnections: [InputFlowItemConnection!]! # first is the root
+
+}
 
 type Flow {
     _id: ID
@@ -6,9 +17,10 @@ type Flow {
     name: String
     description: String
 
+    rootFlowItem: FlowItem!
     flowItems: [FlowItem!]!
     flowConnections: [FlowItemConnection!]!
 
-    owner: ID
+    owner: User
 
 }

@@ -1,0 +1,17 @@
+input InputUserItem {
+
+    user: ID!
+    item: ID!
+
+    createdAt: Date!
+
+}
+
+type UserItem {
+    _id: ID!
+    user: User!
+    item: Item!
+
+    createdAt: Date!
+
+}

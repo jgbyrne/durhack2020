@@ -1,25 +1,12 @@
+input InputUser {
+    name: String
+}
+
+
 type User {
     _id: ID!
     name: String!
 
     flows: [Flow!]!
-
-}
-
-type Dive { # Othersie userFlow
-    _id: ID!
-    user: ID!
-    flow: ID!
-
-    createdAt: Date!
-
-}
-
-type UserItem {
-    _id: ID!
-    user: ID!
-    item: ID!
-
-    createdAt: Date!
 
 }

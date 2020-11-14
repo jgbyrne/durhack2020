@@ -1,0 +1,18 @@
+
+input InputDive { # Othersie InputUserFlow
+
+    user: ID!
+    flow: ID!
+
+    createdAt: Date!
+
+}
+
+type Dive { # Othersie UserFlow
+    _id: ID!
+    user: User!
+    flow: Flow!
+
+    createdAt: Date!
+
+}

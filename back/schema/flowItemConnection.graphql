@@ -1,0 +1,17 @@
+input InputFlowItemConnection {
+    description: String!
+    from: Int # index from 0
+    to: Int # index from 0
+
+}
+
+type FlowItemConnection {
+    _id: ID!
+    flow: Flow
+
+    description: String!
+
+    from: FlowItem!
+    to: FlowItem!
+
+}

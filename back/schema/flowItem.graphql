@@ -1,0 +1,14 @@
+input InputFlowItem {
+    flow: ID
+    item: ID
+}
+
+type FlowItem {
+    _id: String!
+
+    flow: Flow!
+    item: Item!
+
+    description: String!
+
+}
