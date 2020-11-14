@@ -9,6 +9,8 @@ app = Flask(__name__)
 
 music_items = music.Music("./music")
 
+URL = "http://127.0.0.1:5000"
+
 # When a search is performed, an item_set is produced
 # These items are then cached in two variables
 
@@ -52,7 +54,9 @@ def transform_album(item_id, album):
                 "id": item_id,
                 "title": album["name"],
                 "subtitle": album["artist_name"],
-                "year": album["year"]
+                "year": album["year"],
+                "image": "{}/item/{}/image".format(URL, item_id),
+                "thumbnail": "{}/item/{}/thumbnail".format(URL, item_id),
             }
 
 @app.route('/item/<string:item_id>/', methods=['GET'])
