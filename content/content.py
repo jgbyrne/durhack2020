@@ -3,6 +3,7 @@ import music
 import sqlite3
 import uuid
 import io
+import os
 
 from flask import Flask, make_response, jsonify, request, send_file
 app = Flask(__name__)
@@ -10,6 +11,10 @@ app = Flask(__name__)
 music_items = music.Music("./music")
 
 URL = "http://127.0.0.1:5000"
+
+if not os.path.exists("items.db"):
+    conn = sqlite3.connect("items.db")
+    conn.execute("CREATE TABLE items ( item_id TEXT PRIMARY KEY, item_type TEXT, impl_id TEXT )")
 
 # When a search is performed, an item_set is produced
 # These items are then cached in two variables
@@ -117,5 +122,3 @@ def get_thumbnail(item_id):
                              mimetype='image/png')
         return make_response(jsonify({"msg": "No such Item Type"}), 400)
     return make_response(jsonify({"msg": "Not Found"}), 404)
-
-

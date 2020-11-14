@@ -17,6 +17,9 @@ class Music:
 
         mbz.set_useragent("Durhack 2020", "0.0.1", "https://github.com/jgbyrne")
 
+        if not os.path.exists("{}/music.db".format(self.path)):
+            self.create_db()
+
     def create_db(self):
         conn = sqlite3.connect("{}/music.db".format(self.path))
         conn.execute("CREATE TABLE albums (album_id TEXT PRIMARY KEY, name TEXT, year INTEGER, artist_id TEXT, artist_name TEXT)")
