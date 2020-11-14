@@ -3,7 +3,7 @@ schema: "http://localhost:4000/graphql"
 documents: "src/**/*.graphql"
 watch: true
 generates:
-  src/generated/graphql.tsx:
+  ../front/src/generated/graphql.tsx:
     plugins:
       - "typescript"
       - "typescript-operations"
@@ -12,18 +12,16 @@ generates:
       reactApolloVersion: 3
       scalars:
         Date: string
-        Duration: number
 
-  src/generated/modules.d.ts:
+  ../front/src/generated/modules.d.ts:
     plugins:
       - "typescript-graphql-files-modules"
     config:
       reactApolloVersion: 3
       scalars:
         Date: string
-        Duration: number
 
-  ../server/src/generated/graphql.ts:
+  ../back/src/generated/graphql.ts:
     plugins:
       - "typescript"
       - "typescript-resolvers"
@@ -32,52 +30,35 @@ generates:
       contextType: ../server#GraphQLContext
       noSchemaStitching: true
       mappers:
-        User: ../entities/User#UserDocument
-        TestTaken: ../entities/TestTaken#TestTakenDocument
-        Channel: ../entities/Channel#ChannelDocument
-        Playlist: ../entities/Playlist#PlaylistDocument
-        Content: ../entities/Content#ContentDocument
-        Organisation: ../entities/Organisation#OrganisationDocument
-        Media: ../entities/Media#MediaDocument
-        QuestionSet: ../entities/QuestionSet#QuestionSetDocument
-        Tag: ../entities/Tag#TagDocument
-        UserContent: ../entities/UserContent#UserContentDocument
-        UserQuestionSet: ../entities/UserQuestionSet#UserQuestionSetDocument
+        Dive: ./dive#IDive
+        InputDive: ./dive#IInputDive
 
-        #        SearchResult: ../entities/SearchResult#SearchResultDocument
-        UserOwner: ../entities/scalarsAndUtils#IUserOwner
-        ChannelOwner: ../entities/scalarsAndUtils#IChannelOwner
+        Flow: ./flow#IFlow
+        InputFlow: ./flow#IInputFlow
 
-        AllSearchQuery: ../entities/SearchResult#IAllSearchQuery
-        RecommendationQuery: ../entities/SearchResult#IRecommendationQuery
+        Flowitem: ./flowitem#IFlowitem
+        InputFlowitem: ./flowitem#IInputFlowitem
 
-        ContentSearchQuery : ../entities/Content#IContentSearchQuery
-        MediaSearchQuery : ../entities/Media#IMediaSearchQuery
-        QuestionSetSearchQuery : ../entities/QuestionSet#IQuestionSetSearchQuery
-        Chapter : ../entities/QuestionSet#IChapter
-        UserSearchQuery : ../entities/User#IUserSearchQuery
-        OrganisationSearchQuery : ../entities/Organisation#IOrganisationSearchQuery
-        ChannelSearchQuery : ../entities/Channel#IChannelSearchQuery
-        TagSearchQuery : ../entities/Tag#ITagSearchQuery
-        PlaylistSearchQuery : ../entities/Playlist#IPlaylistSearchQuery
+        Flowitemconnection: ./flowItemConnection#IFlowItemConnection
+        InputFlowitemconnection: ./flowItemConnection#IInputFlowItemConnection
 
+        Item: ./item#IItem
+        InputItem: ./item#IInputItem
+
+        User: ./user#IUser
+        InputUser: ./user#IInputUser
+
+        Useritem: ./userItem#IUserItem
+        InputUseritem: ./userItem#IInputUserItem
+
+        Entry: ./entry#IEntry
+        InputEntry: ./entry#IInputEntry
+        
       scalars:
         Date: string
-        Duration: number
-  ../server/src/generated/modules.d.ts:
+  ../back/src/generated/modules.d.ts:
     plugins:
       - "typescript-graphql-files-modules"
     config:
       scalars:
         Date: string
-        Duration: number
-
-
-#        diveTypes,
-#        flowTypes,
-#        flowItemTypes,
-#        flowItemConnectionTypes,
-#        itemTypes,
-#        userTypes,
-#        userItemTypes,
-#        entryTypes,
