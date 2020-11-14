@@ -13,10 +13,14 @@ export const itemTypes = gql`
     type Item {
         _id: ID!
 
-        name: String!
+        title: String!
+        subtitle: String!
+        
         url: String!
         type: ItemType!
-        thumbnail: String! #computed at run time
+        
+        thumbnail: String!
+        image: String!
 
         flowItems: [FlowItem!]!
         flowItem(flow: ID): FlowItem
