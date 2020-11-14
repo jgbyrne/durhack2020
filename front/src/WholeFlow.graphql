@@ -1,0 +1,38 @@
+query WholeFlow($_id: ID!) {
+    flow(_id: $_id) {
+        _id
+
+        name
+        description
+        owner {
+            name
+        }
+
+        rootSize
+
+        flowItems {
+            _id
+            description
+            item {
+                _id
+                url
+
+                title
+                subtitle
+
+                image
+                thumbnail
+
+            }
+        }
+        flowConnections {
+            _id
+            from {
+                _id
+            }
+            to {
+                _id
+            }
+        }
+    }
+}
