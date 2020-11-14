@@ -203,6 +203,40 @@ export type MutationCreateUserItemArgs = {
   user?: Maybe<InputUser>;
 };
 
+export type WholeFlowQueryVariables = Exact<{
+  _id: Scalars['ID'];
+}>;
+
+
+export type WholeFlowQuery = (
+  { __typename?: 'Query' }
+  & { flow: (
+    { __typename?: 'Flow' }
+    & Pick<Flow, '_id' | 'name' | 'description' | 'rootSize'>
+    & { owner?: Maybe<(
+      { __typename?: 'User' }
+      & Pick<User, 'name'>
+    )>, flowItems: Array<(
+      { __typename?: 'FlowItem' }
+      & Pick<FlowItem, '_id' | 'description'>
+      & { item: (
+        { __typename?: 'Item' }
+        & Pick<Item, '_id' | 'url' | 'title' | 'subtitle' | 'image' | 'thumbnail'>
+      ) }
+    )>, flowConnections: Array<(
+      { __typename?: 'FlowItemConnection' }
+      & Pick<FlowItemConnection, '_id'>
+      & { from: (
+        { __typename?: 'FlowItem' }
+        & Pick<FlowItem, '_id'>
+      ), to: (
+        { __typename?: 'FlowItem' }
+        & Pick<FlowItem, '_id'>
+      ) }
+    )> }
+  ) }
+);
+
 export type NameOfThingQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -215,6 +249,66 @@ export type NameOfThingQuery = (
 );
 
 
+export const WholeFlowDocument = gql`
+    query WholeFlow($_id: ID!) {
+  flow(_id: $_id) {
+    _id
+    name
+    description
+    owner {
+      name
+    }
+    rootSize
+    flowItems {
+      _id
+      description
+      item {
+        _id
+        url
+        title
+        subtitle
+        image
+        thumbnail
+      }
+    }
+    flowConnections {
+      _id
+      from {
+        _id
+      }
+      to {
+        _id
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useWholeFlowQuery__
+ *
+ * To run a query within a React component, call `useWholeFlowQuery` and pass it any options that fit your needs.
+ * When your component renders, `useWholeFlowQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useWholeFlowQuery({
+ *   variables: {
+ *      _id: // value for '_id'
+ *   },
+ * });
+ */
+export function useWholeFlowQuery(baseOptions: Apollo.QueryHookOptions<WholeFlowQuery, WholeFlowQueryVariables>) {
+        return Apollo.useQuery<WholeFlowQuery, WholeFlowQueryVariables>(WholeFlowDocument, baseOptions);
+      }
+export function useWholeFlowLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<WholeFlowQuery, WholeFlowQueryVariables>) {
+          return Apollo.useLazyQuery<WholeFlowQuery, WholeFlowQueryVariables>(WholeFlowDocument, baseOptions);
+        }
+export type WholeFlowQueryHookResult = ReturnType<typeof useWholeFlowQuery>;
+export type WholeFlowLazyQueryHookResult = ReturnType<typeof useWholeFlowLazyQuery>;
+export type WholeFlowQueryResult = Apollo.QueryResult<WholeFlowQuery, WholeFlowQueryVariables>;
 export const NameOfThingDocument = gql`
     query NameOfThing {
   flow(_id: "") {
