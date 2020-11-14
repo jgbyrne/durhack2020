@@ -1,37 +1,9 @@
 import React from 'react';
 import './App.css';
-import FlowMap from "./components/FlowMap";
-import {LoginProvider} from "./LoginContext";
-
-let flowItemData = [{
-    name: "Tempest Sonata",
-    description: "A more complex piece, ideal for the initiated",
-    thumbnail: "https://picsum.photos/200/200",
-    _id: "A",
-}, {
-    name: "Moonlight Sonata 1",
-    description: "A gentle and melancholy introduction to Beethoven",
-    thumbnail: "https://picsum.photos/200/200",
-    _id: "B",
-}, {
-    name: "Moonlight Sonata 1",
-    description: "A gentle and melancholy introduction to Beethoven",
-    thumbnail: "https://picsum.photos/200/200",
-    _id: "C",
-}];
-
-let flowItemConnectionData = [
-    {_id: "0", from: "A", to: "B"},
-    {_id: "1", from: "B", to: "C"},
-    {_id: "2", from: "B", to: "D"}
-];
+import {AppWrapper} from "./AppWrapper";
+import {Main} from "./Main";
 
 export const App = () =>
-    <LoginProvider>
-        <div className="App">
-            <FlowMap
-                flowItemData={flowItemData}
-                flowItemConnectionData={flowItemConnectionData}
-            />
-        </div>
-    </LoginProvider>
+    <AppWrapper>
+        <Main/>
+    </AppWrapper>

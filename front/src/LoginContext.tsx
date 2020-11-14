@@ -28,6 +28,6 @@ export const LoginProvider: FC<unknown> = props => {
     }
 
     return <LoginContext.Provider value={{user, login}}>
-        {() => props.children}
+        {props.children}
     </LoginContext.Provider>
 }
