@@ -30,12 +30,6 @@ export const FlowMap: FC<FlowMapProps> = props => {
 
     const [targetZoom, setTargetZoom] = useState(1);
 
-    useKeyPress(e => {
-        console.log(e)
-        props.addItem()
-        return true;
-    })
-
     const {width, height} = useWindowSize()
 
     const [cameraSpring, setCameraSpring] = useSpring((): OffsetSpring => ({
@@ -79,6 +73,16 @@ export const FlowMap: FC<FlowMapProps> = props => {
         top: itemPositions[item]?.top ?? 0
     }))) as ItemProps[];
 
+    useKeyPress(e => {
+        console.log(e)
+
+        // if (e.key === "ArrowLeft") {
+        //     setCameraSpring({left: -10})
+        // }
+        props.addItem()
+        return true;
+    })
+
     const bind = useGesture({
         onDrag: ({offset: [x, y], vxvy: [vx]}) =>
             setCameraSpring({left: x, top: y}),
@@ -99,9 +103,9 @@ export const FlowMap: FC<FlowMapProps> = props => {
 
     const [insertAt, setInsertAt] = useState<string | null>(null)
     const transitions = useTransition(insertAt !== null, null, {
-        from: {opacity: 0, transform: "translateY(-100px) scale(.8)"},
-        enter: {opacity: 1, transform: "translateY(0) scale(1)"},
-        leave: {opacity: 0, transform: "translateY(100px) scale(.8)"},
+        from: {opacity: 0, transform: "translateY(-100px) scale(0.8)"},
+        enter: {opacity: 1, transform: "translateY(0px) scale(1)"},
+        leave: {opacity: 0, transform: "translateY(-100px) scale(0.8)"},
     })
 
     return <div {...bind()} className="FlowMap">
@@ -111,7 +115,7 @@ export const FlowMap: FC<FlowMapProps> = props => {
             <UserMenu/>
         </div>
 
-        {transitions.map(({props,key}) =>
+        {transitions.map(({props, key}) =>
             <animated.div key={key} className={"modal"} style={props}>
                 Content
             </animated.div>
