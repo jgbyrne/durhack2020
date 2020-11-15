@@ -36,8 +36,8 @@ export const springLayout = (iterations: number,
                 let cx = dd * Math.cos(a) * lambda;
                 let cy = dd * Math.sin(a) * lambda;
 
-                rec[k1].left -= cx;
-                rec[k1].top -= cy;
+                rec[k1].left += cx;
+                rec[k1].top += cy;
             }
         }));
     }
