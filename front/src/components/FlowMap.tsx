@@ -1,7 +1,7 @@
 import {FlowItemComponent} from "./FlowItemComponent"
-import React, {FC, useEffect, useState} from 'react';
+import React, {FC, useState} from 'react';
 import './FlowMap.css';
-import {randomLayout, Position} from "../logic/layout";
+import {Position, randomLayout} from "../logic/layout";
 import {useGesture} from 'react-use-gesture'
 import {animated, useSpring, useSprings} from 'react-spring'
 import SearchBar from "./ui/SearchBar";
@@ -29,7 +29,7 @@ export const FlowMap: FC<FlowMapProps> = props => {
     const [cameraSpring, setCameraSpring] = useSpring((): OffsetSpring => ({
         left: 0,
         top: 0,
-        transform: `translate(0px, 0px), scale(1), translate(0px, 0px)`
+        transform: `scale(1)`,
     }));
     const [targetZoom, setTargetZoom] = useState(1);
 
@@ -54,11 +54,18 @@ export const FlowMap: FC<FlowMapProps> = props => {
         onDrag: ({offset: [x, y], vxvy: [vx]}) =>
             setCameraSpring({left: x, top: y}),
         onWheel: (state) => {
-            const a = 100;
-            const newTargetZoom = a / (state.offset[1] + a);
 
-            setCameraSpring({transform: `translate(${width / 2}px, ${height / 2}px), scale(${newTargetZoom}), translate(-${width / 2}px, -${height / 2}px)`})
+            const maxZoomFactor = 4;
+            const minZoomFactor = 0.25;
+            const a = 200;
+            const newTargetZoom = a / Math.max(state.offset[1] + a, a / maxZoomFactor);
+
+            console.log(newTargetZoom);
+
+            setCameraSpring({transform: `scale(${newTargetZoom})`});
+
         }
+
     });
 
     let indicesFrom = props.flow.flowConnections.map(c => props.flow.flowItems.findIndex(a => c.from._id === a._id));
