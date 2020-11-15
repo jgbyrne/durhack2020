@@ -1,5 +1,5 @@
 import {FlowItemComponent} from "./FlowItemComponent"
-import React, {FC, useState} from 'react';
+import React, {FC, useEffect, useState} from 'react';
 import './FlowMap.css';
 import {randomLayout, Position} from "../logic/layout";
 import {useGesture} from 'react-use-gesture'
@@ -10,7 +10,7 @@ import Brand from "./ui/Brand";
 import ArrowButton from "./ui/ArrowButton";
 import {WholeFlowQuery} from "../generated/graphql";
 import {FlowItemConnectionComponent} from "./FlowItemConnection";
-import {useWindowSize} from "react-use";
+import {useKeyPress, useWindowSize} from "react-use";
 
 type FlowMapProps = & {
     flow: WholeFlowQuery["flow"]
@@ -21,11 +21,22 @@ type FlowMapProps = & {
 type OffsetSpring = {
     left: number,
     top: number,
+    transform: string,
 }
 
 export const FlowMap: FC<FlowMapProps> = props => {
 
-    const [cameraSpring, setCameraSpring] = useSpring((): OffsetSpring => ({left: 0, top: 0,}));
+    const [cameraSpring, setCameraSpring] = useSpring((): OffsetSpring => ({
+        left: 0,
+        top: 0,
+        transform: `translate(0px, 0px), scale(1), translate(0px, 0px)`
+    }));
+    const [targetZoom, setTargetZoom] = useState(1);
+
+    useKeyPress(e => {
+        props.addItem()
+        return true;
+    })
 
     const {width, height} = useWindowSize()
 
@@ -40,17 +51,13 @@ export const FlowMap: FC<FlowMapProps> = props => {
     const springs = useSprings<Position, Position>(itemPositions.length, itemPositions)
 
     const bind = useGesture({
-        onDrag: ({offset: [x, y], vxvy: [vx]}) => {
-            setCameraSpring({left: x, top: y});
-            // return vx && ((dragOffset.current = -x))
-        },
-        onWheel: ({offset: [, y], vxvy: [, vy]}) => {
-            if (vy) {
-                //setSpringOffset({transform: ""});
-            }
-        },
-        onScroll: () => {
+        onDrag: ({offset: [x, y], vxvy: [vx]}) =>
+            setCameraSpring({left: x, top: y}),
+        onWheel: (state) => {
+            const a = 100;
+            const newTargetZoom = a / (state.offset[1] + a);
 
+            setCameraSpring({transform: `translate(${width / 2}px, ${height / 2}px), scale(${newTargetZoom}), translate(-${width / 2}px, -${height / 2}px)`})
         }
     });
 
