@@ -13,6 +13,7 @@
     "@types/compression": "^1.7.0",
     "@types/cookie-parser": "^1.4.2",
     "@types/morgan": "^1.9.2",
+    "@types/node-fetch": "^2.5.7",
     "apollo-server-express": "^2.19.0",
     "compression": "^1.7.4",
     "cookie-parser": "^1.4.5",
@@ -24,6 +25,7 @@
     "helmet": "^4.2.0",
     "mongodb": "^3.6.3",
     "morgan": "^1.10.0",
+    "node-fetch": "^2.6.1",
     "nodemon": "^2.0.6",
     "tsc": "^1.20150623.0",
     "typescript": "^4.0.5"

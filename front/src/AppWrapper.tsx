@@ -7,7 +7,7 @@ export const AppWrapper: FC<unknown> = props => {
     const client = new ApolloClient<object>({
         cache: new InMemoryCache({}),
         link: createHttpLink({
-            uri: "localhost:4000/graphql"
+            uri: "http://localhost:4000/graphql"
         }),
     });
 

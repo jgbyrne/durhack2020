@@ -10,7 +10,7 @@ export type Login = {
     user: User | null,
 }
 
-const LoginContext = React.createContext<Login | null>(null);
+export const LoginContext = React.createContext<Login | null>(null);
 
 export const LoginProvider: FC<unknown> = props => {
 
