@@ -19,8 +19,6 @@ const FlowItemConnection: FC<LayoutFlowItemConnection> = props => {
     const flipX = Math.sign(props.toX - props.fromX);
     const flipY = Math.sign(props.toY - props.fromY);
 
-    console.log(lowerX, upperX, lowerY, upperY);
-
     return <svg className="FlowItemConnection"
                 style={{
                     position: "absolute",

@@ -5,6 +5,7 @@ import FlowItemConnection from "./FlowItemConnection";
 import {springLayout} from "../logic/layout";
 import {useGesture} from 'react-use-gesture'
 import {animated, useSpring} from 'react-spring'
+import SearchBar from "./SearchBar";
 
 type FlowItem = {
     _id: string,
@@ -61,11 +62,13 @@ const FlowMap: FC<FlowMap> = props => {
     let indicesFrom = props.flowItemConnectionData.map(c => props.flowItemData.findIndex((a) => c.from == a._id));
     let indicesTo = props.flowItemConnectionData.map(c => props.flowItemData.findIndex((a) => c.to == a._id));
 
+    console.log(indicesFrom, indicesTo);
 
     return <div
         {...bind()}
         className="FlowMap"
     >
+        <SearchBar/>
         <animated.div className={"FlowMap-inner"} style={springOffset}>
             {props.flowItemData.map((a, i) =>
                 <FlowItem key={i} {...{...a, ...flowItemPositions[i]}}/>
