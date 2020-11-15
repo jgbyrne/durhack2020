@@ -7,12 +7,35 @@
     right: 0;
     top: 0;
     bottom: 0;
-    background-color: #61dafb;
     z-index: 1;
     opacity: 0.5;
     transition: opacity 150ms;
+    cursor: pointer;
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-drag: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+}
+
+.ArrowButton img {
+    height: 100%;
+    width: 100%;
+    object-fit: scale-down;
+    -moz-user-select: none;
+    -webkit-user-drag: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
 }
 
 .ArrowButton:hover {
     opacity: 1;
+}
+
+.ArrowButton.Bottom img {
+    transform: rotate(270deg);
+}
+
+.ArrowButton.Right img {
+    transform: rotate(180deg);
 }

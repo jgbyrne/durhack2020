@@ -1,7 +1,7 @@
 .FlowItem {
     position: absolute;
-    width: 200px;
-    height: 200px;
+    width: 100px;
+    height: 100px;
     background-color: white;
     border-radius: 25%;
     box-shadow: 0 0 30px #808080B0;
@@ -28,6 +28,7 @@
 }
 
 .FlowItem .floaty-text {
+    font-size: 80%;
     position: absolute;
     bottom: 0;
     color: black;
@@ -43,4 +44,14 @@
 .FlowItem .floaty-text .name {
     font-size: 130%;
     color: black;
+}
+
+.FlowItem .floaty-text .description {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.FlowItem:hover .floaty-text .description {
+    opacity: 1;
+    pointer-events: unset;
 }

@@ -23,8 +23,8 @@ const FlowItemConnection: FC<LayoutFlowItemConnection> = props => {
                 style={{
                     position: "absolute",
                     zIndex: -1,
-                    left: `${lowerX + 100}px`,
-                    top: `${lowerY + 100}px`,
+                    left: `${lowerX + 50}px`,
+                    top: `${lowerY + 50}px`,
                     width: `${upperX - lowerX}px`,
                     height: `${upperY - lowerY}px`
                 }}>
