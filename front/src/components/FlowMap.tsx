@@ -71,7 +71,10 @@ const FlowMap: FC<FlowMap> = props => {
         <Brand/>
         <SearchBar/>
         <UserMenu/>
-        <ArrowButton/>
+        <ArrowButton direction={"Bottom"}/>
+        <ArrowButton direction={"Left"}/>
+        <ArrowButton direction={"Right"}/>
+
         <animated.div className={"FlowMap-inner"} style={springOffset}>
             {props.flowItemData.map((a, i) =>
                 <FlowItem key={i} {...{...a, ...flowItemPositions[i]}}/>

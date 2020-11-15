@@ -9,4 +9,10 @@
     bottom: 0;
     background-color: #61dafb;
     z-index: 1;
+    opacity: 0.5;
+    transition: opacity 150ms;
+}
+
+.ArrowButton:hover {
+    opacity: 1;
 }

@@ -1,9 +1,14 @@
 .UserMenu {
-    width: 40px;
-    height: 40px;
+    width: 50px;
+    height: 50px;
     position: absolute;
-    margin: 10px;
+    margin: 5px;
     right: 0;
     top: 0;
     z-index: 1;
+}
+
+.UserMenu img {
+    width: 100%;
+    height: 100%;
 }
