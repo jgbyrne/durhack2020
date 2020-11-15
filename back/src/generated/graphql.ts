@@ -4,6 +4,7 @@ import { IUserFlow, IInputUserFlow } from '../objects/userFlow';
 import { IFlow, IInputFlow } from '../objects/flow';
 import { IFlowItem, IInputFlowItem } from '../objects/flowItem';
 import { IFlowItemConnection, IInputFlowItemConnection } from '../objects/flowItemConnection';
+import { ISearchItem } from '../objects/searchItem';
 import { IItem, IInputItem } from '../objects/item';
 import { IUser, IInputUser } from '../objects/user';
 import { IUserItem, IInputUserItem } from '../objects/userItem';
@@ -125,6 +126,15 @@ export enum ItemType {
   Album = 'Album'
 }
 
+export type SearchItem = {
+  __typename?: 'SearchItem';
+  id: Scalars['ID'];
+  title: Scalars['String'];
+  subtitle: Scalars['String'];
+  type: ItemType;
+  item: Item;
+};
+
 export type InputUser = {
   name: Scalars['String'];
 };
@@ -155,7 +165,7 @@ export type Query = {
   flow: Flow;
   user: User;
   item: Item;
-  searchItem: Array<Item>;
+  searchItem: Array<SearchItem>;
 };
 
 
@@ -176,6 +186,7 @@ export type QueryItemArgs = {
 
 export type QuerySearchItemArgs = {
   name: Scalars['String'];
+  itemType: ItemType;
 };
 
 export type Mutation = {
@@ -295,6 +306,7 @@ export type ResolversTypes = {
   InputItem: ResolverTypeWrapper<IInputItem>;
   Item: ResolverTypeWrapper<IItem>;
   ItemType: ItemType;
+  SearchItem: ResolverTypeWrapper<ISearchItem>;
   InputUser: ResolverTypeWrapper<IInputUser>;
   User: ResolverTypeWrapper<IUser>;
   InputUserItem: InputUserItem;
@@ -322,6 +334,7 @@ export type ResolversParentTypes = {
   FlowItemConnection: Omit<FlowItemConnection, 'flow' | 'from' | 'to'> & { flow?: Maybe<ResolversParentTypes['Flow']>, from: ResolversParentTypes['FlowItem'], to: ResolversParentTypes['FlowItem'] };
   InputItem: IInputItem;
   Item: IItem;
+  SearchItem: ISearchItem;
   InputUser: IInputUser;
   User: IUser;
   InputUserItem: InputUserItem;
@@ -391,6 +404,15 @@ export type ItemResolvers<ContextType = GraphQLContext, ParentType = ResolversPa
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
+export type SearchItemResolvers<ContextType = GraphQLContext, ParentType = ResolversParentTypes['SearchItem']> = {
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  title?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  subtitle?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  type?: Resolver<ResolversTypes['ItemType'], ParentType, ContextType>;
+  item?: Resolver<ResolversTypes['Item'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
 export type UserResolvers<ContextType = GraphQLContext, ParentType = ResolversParentTypes['User']> = {
   _id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
@@ -410,7 +432,7 @@ export type QueryResolvers<ContextType = GraphQLContext, ParentType = ResolversP
   flow?: Resolver<ResolversTypes['Flow'], ParentType, ContextType, RequireFields<QueryFlowArgs, '_id'>>;
   user?: Resolver<ResolversTypes['User'], ParentType, ContextType, RequireFields<QueryUserArgs, '_id'>>;
   item?: Resolver<ResolversTypes['Item'], ParentType, ContextType, RequireFields<QueryItemArgs, '_id'>>;
-  searchItem?: Resolver<Array<ResolversTypes['Item']>, ParentType, ContextType, RequireFields<QuerySearchItemArgs, 'name'>>;
+  searchItem?: Resolver<Array<ResolversTypes['SearchItem']>, ParentType, ContextType, RequireFields<QuerySearchItemArgs, 'name' | 'itemType'>>;
 };
 
 export type MutationResolvers<ContextType = GraphQLContext, ParentType = ResolversParentTypes['Mutation']> = {
@@ -429,6 +451,7 @@ export type Resolvers<ContextType = GraphQLContext> = {
   FlowItem?: FlowItemResolvers<ContextType>;
   FlowItemConnection?: FlowItemConnectionResolvers<ContextType>;
   Item?: ItemResolvers<ContextType>;
+  SearchItem?: SearchItemResolvers<ContextType>;
   User?: UserResolvers<ContextType>;
   UserItem?: UserItemResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;

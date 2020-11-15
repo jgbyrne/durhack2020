@@ -1,5 +1,6 @@
-import {gql} from "apollo-server-express";
+import {ApolloError, gql} from "apollo-server-express";
 import {MutationResolvers, QueryResolvers} from "../generated/graphql";
+import fetch from "node-fetch"
 
 export const entryTypes = gql`
 
@@ -8,7 +9,7 @@ export const entryTypes = gql`
         user(_id: ID!): User!
         item(_id: ID!): Item!
 
-        searchItem(name: String!): [Item!]!
+        searchItem(name: String!, itemType: ItemType!): [SearchItem!]!
 
     }
 
@@ -23,5 +24,27 @@ export const entryTypes = gql`
     }
 `
 
-export const queryResolver: QueryResolvers = {}
+export const queryResolver: QueryResolvers = {
+    item: async (_, {_id}) => {
+        const url = `http://localhost:7373/item/${_id}`;
+        const request = await fetch(url)
+
+        if (request.status === 200) {
+            return await request.json()
+        } else {
+            throw new ApolloError("Failed to fetch")
+        }
+    }
+    ,
+    searchItem: async (_, {name, itemType}) => {
+        const url = `http://localhost:7373/search/${itemType.toLowerCase()}?q=${name}`;
+        const request = await fetch(url)
+
+        if (request.status === 200) {
+            return await request.json()
+        } else {
+            throw new ApolloError("Failed to search")
+        }
+    }
+}
 export const mutationResolver: MutationResolvers = {}
