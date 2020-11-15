@@ -3,8 +3,8 @@ import {LoginContext} from "./LoginContext";
 
 export const LoginPanel: FC<unknown> = () => {
 
-    const [username, setUsername] = useState<string>("")
-    const login = useContext(LoginContext)
+    const [username, setUsername] = useState<string>("");
+    const login = useContext(LoginContext);
 
     const submit = () => login?.login(username)
 
@@ -18,4 +18,4 @@ export const LoginPanel: FC<unknown> = () => {
         </form>
     </>
 
-}
+};

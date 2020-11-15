@@ -62,9 +62,10 @@ export const FlowMap: FC<FlowMapProps> = props => {
     let indicesTo = props.flow.flowConnections.map(c => props.flow.flowItems.findIndex(a => c.to._id == a._id));
 
     return <div {...bind()} className="FlowMap">
-        <Brand/>
-        <SearchBar/>
-        <UserMenu/>
+        <div className="top-bar"><Brand/>
+            <SearchBar/>
+            <UserMenu/></div>
+
         <ArrowButton direction={"Bottom"}/>
         <ArrowButton direction={"Left"}/>
         <ArrowButton direction={"Right"}/>

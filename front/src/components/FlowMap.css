@@ -11,3 +11,11 @@
     height: 5000px;
     position: relative;
 }
+
+.top-bar {
+    width: 92%;
+    margin-left: 4%;
+    margin-right: 4%;
+    position: absolute;
+
+}
