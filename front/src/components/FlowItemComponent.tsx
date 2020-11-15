@@ -9,13 +9,13 @@ type FlowItemProps = {
 
     left: number,
     top: number,
+
+    onClickAdd: () => void
 }
 
 export const FlowItemComponent: FC<FlowItemProps> = props =>
     <animated.div className="FlowItem" style={{left: props.left, top: props.top}}>
-        <div className="edit-button" onClick={e=>{
-
-        }}/>
+        <div className="edit-button" onClick={props.onClickAdd}/>
         <img src={props.thumbnail + "?" + Math.random().toString()}/>
         <div className="floaty-text">
             <div className="name">{props.title}</div>

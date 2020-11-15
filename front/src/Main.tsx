@@ -7,7 +7,7 @@ import update from "immutability-helper";
 
 export const Main: FC<unknown> = () => {
 
-    const [currentFlowId, setCurrentFlowId] = useState<Scalars["ID"]>()
+    const [currentFlowId, setCurrentFlowId] = useState<Scalars["ID"]>("5fb0effd475d50fd0f52fd6d")
 
     const login = useContext(LoginContext)
 

@@ -1,5 +1,6 @@
 import {ApolloError, gql} from "apollo-server-express";
 import {Flow, FlowResolvers, InputFlow, Scalars} from "../generated/graphql";
+import {ObjectId} from "mongodb";
 
 export const flowTypes = gql`
 
@@ -46,8 +47,10 @@ export const flowResolvers: FlowResolvers = {
             throw new ApolloError("Couldn't find flowItemConnections")
         })(),
 
-    owner: async (flow, _, {db}) =>
-        await db.collection("user").findOne({_id: flow.owner}) ?? (() => {
+    owner: async (flow, _, {db}) => {
+        console.log(flow.owner)
+        return await db.collection("user").findOne({_id: new ObjectId(flow.owner)}) ?? (() => {
             throw new ApolloError("Couldn't find Owner")
-        })(),
+        })();
+    },
 };
