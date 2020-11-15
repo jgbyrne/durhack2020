@@ -1,6 +1,6 @@
 import {ApolloServer} from "apollo-server-express";
 import {ExpressContext} from "apollo-server-express/dist/ApolloServer";
-import {MongoClient} from "mongodb";
+import {Db, MongoClient} from "mongodb";
 import compression from "compression";
 import cookieParser from "cookie-parser";
 import express from "express";
@@ -27,29 +27,39 @@ if (!process.env.CONTENT_SRV_URL) {
     throw new Error("env.CONTENT_SRV_URL is undefined!");
 }
 
+if (!process.env.DB_NAME) {
+    throw new Error("env.DB_NAME is undefined!");
+}
+
 const database = new MongoClient(process.env.MONGO_URL);
 
-export type MongoContext = { mongo: MongoClient } 
+export type MongoContext = { db: Db }
 export type GraphQLContext = ExpressContext & MongoContext
 
-const apolloServer = new ApolloServer({
-    schema: gqlSchema,
-    context: async (context): Promise<GraphQLContext> => ({
-        ...context,
-        ...{mongo: await database.connect()},
-    }),
-});
-apolloServer.applyMiddleware({app, path: "/graphql"});
+database.connect().then((client) => {
+    console.log("Connected to MongoDB...");
 
-if (!process.env.PORT) {
-    console.warn("env.PORT is not defined, defaulting to 4000");
-}
+    const db = client.db(process.env.DB_NAME);
 
-if (!process.env.CONTENT_SRV_URL) {
-    console.error("env.CONTENT_SRV_URL is not defined!");
-}
+    const apolloServer = new ApolloServer({
+        schema: gqlSchema,
+        context: async (context): Promise<GraphQLContext> => ({
+            ...context,
+            ...{db: db},
+        }),
+    });
+    apolloServer.applyMiddleware({app, path: "/graphql"});
 
-const port = process.env.PORT || 4000;
-app.listen(port, () => {
-    console.log(`Starting server on port ${port}`);
+    if (!process.env.PORT) {
+        console.warn("env.PORT is not defined, defaulting to 4000");
+    }
+
+    if (!process.env.CONTENT_SRV_URL) {
+        console.error("env.CONTENT_SRV_URL is not defined!");
+    }
+
+    const port = process.env.PORT || 4000;
+    app.listen(port, () => {
+        console.log(`Starting server on port ${port}`);
+    });
 });
