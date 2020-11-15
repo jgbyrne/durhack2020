@@ -11,9 +11,13 @@ export const populate = (iterations: number, springLength = 400, ids: string[], 
         }
     }), {} as Record<string, Position>);
 
-export const springLayout = (iterations: number, springLength = 200, ids: string[],
-                             width: number, height: number,
-                             connections: BasicFlowItemConnection[], rec: Record<string, Position>): Record<string, Position> => {
+export const springLayout = (iterations: number,
+                             springLength = 200,
+                             ids: string[],
+                             width: number,
+                             height: number,
+                             connections: BasicFlowItemConnection[],
+                             rec: Record<string, Position>): Record<string, Position> => {
 
 
     const lambda = 1 / iterations;
