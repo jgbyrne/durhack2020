@@ -68,9 +68,10 @@ const FlowMap: FC<FlowMap> = props => {
     console.log(indicesFrom, indicesTo);
 
     return <div {...bind()} className="FlowMap">
-        <Brand/>
-        <SearchBar/>
-        <UserMenu/>
+        <div className="top-bar"><Brand/>
+            <SearchBar/>
+            <UserMenu/></div>
+
         <ArrowButton direction={"Bottom"}/>
         <ArrowButton direction={"Left"}/>
         <ArrowButton direction={"Right"}/>

@@ -3,8 +3,8 @@ import {LoginContext} from "./LoginContext";
 
 export const LoginPanel: FC<unknown> = () => {
 
-    const [username, setUsername] = useState<string>("")
-    const login = useContext(LoginContext)
+    const [username, setUsername] = useState<string>("");
+    const login = useContext(LoginContext);
 
     return <>
         <form onSubmit={e => e.preventDefault()}>
@@ -13,4 +13,4 @@ export const LoginPanel: FC<unknown> = () => {
         </form>
     </>
 
-}
+};
