@@ -2,6 +2,7 @@ content/music/lastfm
 content/music/music.db
 content/music/art/
 content/items.db
+content/youtube/env
 **/__pycache__
 
 back/env

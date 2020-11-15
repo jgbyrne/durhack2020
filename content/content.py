@@ -1,4 +1,5 @@
 import music
+import youtube
 
 import sqlite3
 import uuid
@@ -9,6 +10,7 @@ from flask import Flask, make_response, jsonify, request, send_file
 app = Flask(__name__)
 
 music_items = music.Music("./music")
+youtube_items = youtube.YouTube("./youtube")
 
 URL = "http://127.0.0.1:7373"
 
@@ -51,6 +53,25 @@ def search(item_type):
             temp_item_sets[set_id] = (item_type, item_set)
 
             return jsonify(ret_items)
+        
+        if item_type == "youtube":
+            items = youtube_items.search(query)
+            set_id = str(uuid.uuid4())
+            item_set = set()
+            ret_items = []
+            for item in items:
+                temp_id = str(uuid.uuid4())
+                ret_item = item.copy()
+                ret_item["id"] = temp_id
+                del ret_item["video_id"]
+                ret_items.append(ret_item)
+                item["id"] = temp_id
+                temp_items[temp_id] = (item, set_id)
+                item_set.add(temp_id)
+            temp_item_sets[set_id] = (item_type, item_set)
+
+            return jsonify(ret_items)
+
         return make_response(jsonify({"msg": "No such Item Type"}), 400)
     return make_response(jsonify({"msg": "Needs 'q' param in args"}), 400)
 
@@ -83,14 +104,25 @@ def get_item(item_id):
             c.execute("INSERT INTO items VALUES (?,?,?);", values)
             conn.commit()
             return jsonify(transform_album(item["id"], album))
+        elif item_type == "youtube":
+            video = youtube_items.get_video(item["video_id"])
+            values = (item["id"], "youtube", video["video_id"])
+            c.execute("INSERT INTO items VALUES (?,?,?);", values)
+            conn.commit()
+            del video["video_id"]
+            return jsonify(video)
         else:
             return make_response(jsonify({"msg": "No such Item Type"}), 400)
-    
+
     c.execute("SELECT * FROM items WHERE item_id = ?", (item_id,))
     if item := c.fetchone():
         _, item_type, impl_id = item
         if item_type == "album":
             return jsonify(transform_album(item_id, music_items.get_album(impl_id)))
+        elif item_type == "youtube":
+            video = youtube_items.get_video(impl_id)
+            del video["video_id"]
+            return jsonify(video)
         else:
             return make_response(jsonify({"msg": "No such Item Type"}), 400)
     else:
