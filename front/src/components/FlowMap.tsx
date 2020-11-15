@@ -43,7 +43,6 @@ export const FlowMap: FC<FlowMapProps> = props => {
         transform: `scale(1)`,
     }));
 
-
     const itemIds = useMemo(() => props.flow.flowItems.map(it => it._id), [props.flow.flowItems.length])
     const itemByIds = useMemo(() =>
         props.flow.flowItems.reduce(
@@ -80,7 +79,7 @@ export const FlowMap: FC<FlowMapProps> = props => {
     }))) as ItemProps[];
 
     const bind = useGesture({
-        onDrag: ({offset: [x, y], vxvy: [vx] }) =>
+        onDrag: ({offset: [x, y], vxvy: [vx]}) =>
             setCameraSpring({left: x, top: y}),
         onWheel: (state) => {
 
@@ -97,10 +96,25 @@ export const FlowMap: FC<FlowMapProps> = props => {
 
     });
 
+    const [insertAt, setInsertAt] = useState<string | null>(null)
+    const transitions = useTransition(insertAt !== null, null, {
+        from: {opacity: 0, transform: "translateY(-100px) scale(.8)"},
+        enter: {opacity: 1, transform: "translateY(0) scale(1)"},
+        leave: {opacity: 0, transform: "translateY(100px) scale(.8)"},
+    })
+
     return <div {...bind()} className="FlowMap">
-        <div className="top-bar"><Brand/>
+        <div className="top-bar">
+            <Brand/>
             <SearchBar/>
-            <UserMenu/></div>
+            <UserMenu/>
+        </div>
+
+        {transitions.map(({props,key}) =>
+            <animated.div key={key} className={"modal"} style={props}>
+                Content
+            </animated.div>
+        )}
 
         <ArrowButton direction={"Bottom"}/>
         <ArrowButton direction={"Left"}/>
@@ -113,6 +127,7 @@ export const FlowMap: FC<FlowMapProps> = props => {
                     {...itemByIds[id]}
                     {...itemByIds[id].item}
                     {...springs[i]}
+                    onClickAdd={() => setInsertAt(id)}
                 />
             )}
 
