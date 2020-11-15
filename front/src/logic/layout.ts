@@ -11,15 +11,14 @@ export const populate = (iterations: number, springLength = 400, ids: string[], 
         }
     }), {} as Record<string, Position>);
 
-export const springLayout = (iterations: number, springLength = 200, ids: string[], width: number, height: number, connections: BasicFlowItemConnection[]): Record<string, Position> => {
+export const springLayout = (iterations: number,
+                             springLength = 200,
+                             ids: string[],
+                             width: number,
+                             height: number,
+                             connections: BasicFlowItemConnection[],
+                             rec: Record<string, Position>): Record<string, Position> => {
 
-    const rec = ids.reduce((acc, cur) => ({
-        ...acc,
-        [cur]: {
-            left: Math.random() * 1000,
-            top: Math.random() * 1000
-        }
-    }), {} as Record<string, Position>);
 
     const lambda = 1 / iterations;
 
