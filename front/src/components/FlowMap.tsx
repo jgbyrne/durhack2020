@@ -14,6 +14,7 @@ import {WholeFlowQuery} from "../generated/graphql";
 import {FlowItemConnectionComponent} from "./FlowItemConnection";
 import {useKeyPress, useWindowSize} from "react-use";
 import {QueryTuple} from "@apollo/client";
+import "./Modal.scss"
 
 type FlowMapProps = & {
     flow: WholeFlowQuery["flow"]
