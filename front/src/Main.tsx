@@ -1,6 +1,9 @@
-import React, {FC, useState} from "react";
-import {Scalars} from "./generated/graphql";
+import React, {FC, useContext, useState} from "react";
+import {Scalars, useWholeFlowQuery} from "./generated/graphql";
 import FlowMap from "./components/FlowMap";
+import {LoginContext} from "./LoginContext";
+import {LoginPanel} from "./LoginPanel";
+import {LoadingSpinner} from "./LoadingSpinner";
 
 let flowItemData = [{
     name: "Tempest Sonata",
@@ -28,6 +31,26 @@ let flowItemConnectionData = [
 export const Main: FC<unknown> = () => {
 
     const [currentFlowId, setCurrentFlowId] = useState<Scalars["ID"]>()
+
+    const login = useContext(LoginContext)
+
+    const {data, error, loading} = useWholeFlowQuery(currentFlowId ? {
+        variables: {_id: currentFlowId}
+    } : {
+        skip: true
+    })
+
+    if (!login?.user) {
+        return <div className="App">
+            <LoginPanel/>
+        </div>
+    }
+
+    if (loading) {
+        return <div className="App">
+            <LoadingSpinner/>
+        </div>
+    }
 
     return <div className="App">
         <FlowMap

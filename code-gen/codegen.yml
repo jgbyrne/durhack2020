@@ -41,6 +41,7 @@ generates:
         InputFlowItem: ../objects/flowItem#IInputFlowItem
         FlowItemconnection: ../objects/flowItemConnection#IFlowItemConnection
         InputFlowItemconnection: ../objects/flowItemConnection#IInputFlowItemConnection
+        SearchItem: ../objects/searchItem#ISearchItem
         Item: ../objects/item#IItem
         InputItem: ../objects/item#IInputItem
         User: ../objects/user#IUser

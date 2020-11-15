@@ -115,6 +115,15 @@ export enum ItemType {
   Album = 'Album'
 }
 
+export type SearchItem = {
+  __typename?: 'SearchItem';
+  id: Scalars['ID'];
+  title: Scalars['String'];
+  subtitle: Scalars['String'];
+  type: ItemType;
+  item: Item;
+};
+
 export type InputUser = {
   name: Scalars['String'];
 };
@@ -145,7 +154,7 @@ export type Query = {
   flow: Flow;
   user: User;
   item: Item;
-  searchItem: Array<Item>;
+  searchItem: Array<SearchItem>;
 };
 
 
@@ -166,6 +175,7 @@ export type QueryItemArgs = {
 
 export type QuerySearchItemArgs = {
   name: Scalars['String'];
+  itemType: ItemType;
 };
 
 export type Mutation = {

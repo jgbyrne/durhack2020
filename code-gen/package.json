@@ -10,15 +10,13 @@
   "license": "ISC",
   "dependencies": {
     "graphql": "^15.4.0",
-    "graphql-codegen": "^0.4.0",
-    "ts-log": "^2.2.3"
-  },
-  "devDependencies": {
+    "ts-log": "^2.2.3",
     "@graphql-codegen/cli": "^1.19.1",
     "@graphql-codegen/typescript": "^1.17.9",
     "@graphql-codegen/typescript-graphql-files-modules": "^1.17.8",
     "@graphql-codegen/typescript-operations": "^1.17.8",
     "@graphql-codegen/typescript-react-apollo": "^2.0.6",
     "@graphql-codegen/typescript-resolvers": "^1.17.9"
-  }
+  },
+  "devDependencies": {}
 }
