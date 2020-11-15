@@ -7,8 +7,8 @@ type FlowItemProps = {
     description: string,
     thumbnail: string,
 
-    left: number,
-    top: number,
+    left: any,
+    top: any,
 
     onClickAdd: () => void
 }

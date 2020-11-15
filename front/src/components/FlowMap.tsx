@@ -1,5 +1,7 @@
+import * as ApolloReactHooks from "@apollo/client";
+import Autosuggest from "react-autosuggest";
 import {FlowItemComponent} from "./FlowItemComponent"
-import React, {FC, useEffect, useMemo, useState} from 'react';
+import React, {FC, ReactElement, useEffect, useMemo, useState} from 'react';
 import './FlowMap.css';
 import {populate, Position, randomLayout, springLayout} from "../logic/layout";
 import {useGesture} from 'react-use-gesture'
@@ -11,6 +13,7 @@ import ArrowButton from "./ui/ArrowButton";
 import {WholeFlowQuery} from "../generated/graphql";
 import {FlowItemConnectionComponent} from "./FlowItemConnection";
 import {useKeyPress, useWindowSize} from "react-use";
+import {QueryTuple} from "@apollo/client";
 
 type FlowMapProps = & {
     flow: WholeFlowQuery["flow"]
@@ -68,10 +71,10 @@ export const FlowMap: FC<FlowMapProps> = props => {
 
     type ItemProps = { left: number, top: number }
 
-    const springs = useSprings(itemIds.length, itemIds.map((item): ItemProps => ({
+    const springs = useSprings<ItemProps>(itemIds.length, itemIds.map((item): ItemProps => ({
         left: itemPositions[item]?.left ?? 0,
         top: itemPositions[item]?.top ?? 0
-    }))) as ItemProps[];
+    })))
 
     useKeyPress(e => {
         console.log(e)
@@ -102,12 +105,13 @@ export const FlowMap: FC<FlowMapProps> = props => {
     });
 
     const [insertAt, setInsertAt] = useState<string | null>(null)
-    const transitions = useTransition(insertAt !== null, null, {
-        from: {opacity: 0, transform: "translateY(-100px) scale(0.8)"},
-        enter: {opacity: 1, transform: "translateY(0px) scale(1)"},
-        leave: {opacity: 0, transform: "translateY(-100px) scale(0.8)"},
+    type ModalSpring = { opacity: number, transform: string }
+    const transitions = useTransition<string, ModalSpring>(insertAt === null ? [] : [""], {
+        key: () => "key",
+        from: {opacity: 0, y: -100, transform: "scale(0.8)"},
+        enter: {opacity: 1, y: 0, transform: "scale(1)"},
+        leave: {opacity: 0, y: -100, transform: "scale(0.8)"},
     })
-
     return <div {...bind()} className="FlowMap">
         <div className="top-bar">
             <Brand/>
@@ -115,8 +119,8 @@ export const FlowMap: FC<FlowMapProps> = props => {
             <UserMenu/>
         </div>
 
-        {transitions.map(({props, key}) =>
-            <animated.div key={key} className={"modal"} style={props}>
+        {transitions((style, index) =>
+            <animated.div key={index} className={"modal"} style={style as any}>
                 Content
             </animated.div>
         )}
@@ -148,4 +152,58 @@ export const FlowMap: FC<FlowMapProps> = props => {
 
         </animated.div>
     </div>;
+};
+
+
+export const QueryControlledAutoSuggest = <TData, TItem, TVariables>(
+    props: {
+        getSuggestionValue: (suggestion: TItem) => string
+        onSuggestionSelected: (suggestion: TItem) => void
+        renderSuggestion: (suggestion: TItem) => React.ReactNode
+
+        lazyLoadHook: (baseOptions?: ApolloReactHooks.LazyQueryHookOptions<TData, TVariables>) => QueryTuple<TData, TVariables>
+
+        getItems: (data: TData, value: string) => TItem[]
+        getVariables: (search: string) => TVariables
+
+        className: string | ((value: string) => string)
+        placeholder: string
+    },
+): ReactElement => {
+
+    const [text, setText] = useState<string>("");
+    const [override, setOverride] = useState<boolean>(true);
+    const [getSuggestions, {data}] = props.lazyLoadHook();
+
+    return <Autosuggest<TItem>
+        suggestions={override || !data ? [] : props.getItems(data, text)}
+        onSuggestionsFetchRequested={async (request) => {
+            getSuggestions({variables: props.getVariables(request.value)});
+            setOverride(false);
+        }}
+        onSuggestionsClearRequested={async () => setOverride(true)}
+        getSuggestionValue={props.getSuggestionValue}
+        onSuggestionSelected={async (_, data) => {
+            const suggestion = data.suggestion;
+            props.onSuggestionSelected(suggestion);
+            setText("");
+        }}
+        renderSuggestion={props.renderSuggestion}
+        inputProps={{
+            className: typeof props.className === "string" ? props.className : props.className(text),
+            placeholder: props.placeholder,
+            value: text,
+            onChange: async (event, data) => {
+                setText(
+                    data.method === "click"
+                    || data.method === "enter"
+                    || data.method === "escape"
+                        ? ""
+                        : data.newValue,
+                );
+            },
+            type: "search",
+        }}
+    />;
+
 };
