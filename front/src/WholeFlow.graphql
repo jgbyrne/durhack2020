@@ -25,7 +25,7 @@ query WholeFlow($_id: ID!) {
 
             }
         }
-        flowConnections {
+        flowItemConnections {
             _id
             from {
                 _id

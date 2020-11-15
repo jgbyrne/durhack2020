@@ -24,14 +24,14 @@ export const flowTypes = gql`
 
         rootSize: Int!
         flowItems: [FlowItem!]! # in order
-        flowConnections: [FlowItemConnection!]!
+        flowItemConnections: [FlowItemConnection!]!
 
         owner: User
 
     }
 `;
 
-export type IFlow = Omit<Flow, "flowConnections" | "flowItem" | "owner"> & { owner: Scalars["ID"] };
+export type IFlow = Omit<Flow, "flowItemConnections" | "flowItem" | "owner"> & { owner: Scalars["ID"] };
 export type IInputFlow = InputFlow;
 
 export const flowResolvers: FlowResolvers = {
@@ -41,9 +41,9 @@ export const flowResolvers: FlowResolvers = {
             throw new ApolloError("Couldn't find FlowItem")
         })(),
 
-    flowConnections: async (flow, _, {db}) =>
-        await db.collection("flowConnections").find({flow: flow._id}).toArray() ?? (() => {
-            throw new ApolloError("Couldn't find FlowConnection")
+    flowItemConnections: async (flow, _, {db}) =>
+        await db.collection("flowItemConnections").find({flow: flow._id}).toArray() ?? (() => {
+            throw new ApolloError("Couldn't find flowItemConnections")
         })(),
 
     owner: async (flow, _, {db}) =>

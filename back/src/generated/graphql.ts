@@ -53,7 +53,7 @@ export type Flow = {
   description?: Maybe<Scalars['String']>;
   rootSize: Scalars['Int'];
   flowItems: Array<FlowItem>;
-  flowConnections: Array<FlowItemConnection>;
+  flowItemConnections: Array<FlowItemConnection>;
   owner?: Maybe<User>;
 };
 
@@ -181,9 +181,8 @@ export type Mutation = {
   __typename?: 'Mutation';
   createDive: Dive;
   createFlow: Flow;
-  createItem: Item;
   createUser: User;
-  createUserItem: User;
+  createUserItem: UserItem;
 };
 
 
@@ -198,18 +197,14 @@ export type MutationCreateFlowArgs = {
 };
 
 
-export type MutationCreateItemArgs = {
-  item: InputItem;
-};
-
-
 export type MutationCreateUserArgs = {
   user: InputUser;
 };
 
 
 export type MutationCreateUserItemArgs = {
-  user: InputUser;
+  user: Scalars['ID'];
+  item: Scalars['ID'];
 };
 
 
@@ -346,7 +341,7 @@ export type FlowResolvers<ContextType = GraphQLContext, ParentType = ResolversPa
   description?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   rootSize?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   flowItems?: Resolver<Array<ResolversTypes['FlowItem']>, ParentType, ContextType>;
-  flowConnections?: Resolver<Array<ResolversTypes['FlowItemConnection']>, ParentType, ContextType>;
+  flowItemConnections?: Resolver<Array<ResolversTypes['FlowItemConnection']>, ParentType, ContextType>;
   owner?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
@@ -415,9 +410,8 @@ export type QueryResolvers<ContextType = GraphQLContext, ParentType = ResolversP
 export type MutationResolvers<ContextType = GraphQLContext, ParentType = ResolversParentTypes['Mutation']> = {
   createDive?: Resolver<ResolversTypes['Dive'], ParentType, ContextType, RequireFields<MutationCreateDiveArgs, 'user' | 'flow'>>;
   createFlow?: Resolver<ResolversTypes['Flow'], ParentType, ContextType, RequireFields<MutationCreateFlowArgs, 'flow'>>;
-  createItem?: Resolver<ResolversTypes['Item'], ParentType, ContextType, RequireFields<MutationCreateItemArgs, 'item'>>;
   createUser?: Resolver<ResolversTypes['User'], ParentType, ContextType, RequireFields<MutationCreateUserArgs, 'user'>>;
-  createUserItem?: Resolver<ResolversTypes['User'], ParentType, ContextType, RequireFields<MutationCreateUserItemArgs, 'user'>>;
+  createUserItem?: Resolver<ResolversTypes['UserItem'], ParentType, ContextType, RequireFields<MutationCreateUserItemArgs, 'user' | 'item'>>;
 };
 
 export type Resolvers<ContextType = GraphQLContext> = {

@@ -43,7 +43,7 @@ export type Flow = {
   description?: Maybe<Scalars['String']>;
   rootSize: Scalars['Int'];
   flowItems: Array<FlowItem>;
-  flowConnections: Array<FlowItemConnection>;
+  flowItemConnections: Array<FlowItemConnection>;
   owner?: Maybe<User>;
 };
 
@@ -171,9 +171,8 @@ export type Mutation = {
   __typename?: 'Mutation';
   createDive: Dive;
   createFlow: Flow;
-  createItem: Item;
   createUser: User;
-  createUserItem: User;
+  createUserItem: UserItem;
 };
 
 
@@ -188,18 +187,14 @@ export type MutationCreateFlowArgs = {
 };
 
 
-export type MutationCreateItemArgs = {
-  item: InputItem;
-};
-
-
 export type MutationCreateUserArgs = {
   user: InputUser;
 };
 
 
 export type MutationCreateUserItemArgs = {
-  user: InputUser;
+  user: Scalars['ID'];
+  item: Scalars['ID'];
 };
 
 export type WholeFlowQueryVariables = Exact<{
@@ -222,7 +217,7 @@ export type WholeFlowQuery = (
         { __typename?: 'Item' }
         & Pick<Item, '_id' | 'url' | 'title' | 'subtitle' | 'image' | 'thumbnail'>
       ) }
-    )>, flowConnections: Array<(
+    )>, flowItemConnections: Array<(
       { __typename?: 'FlowItemConnection' }
       & Pick<FlowItemConnection, '_id'>
       & { from: (
@@ -270,7 +265,7 @@ export const WholeFlowDocument = gql`
         thumbnail
       }
     }
-    flowConnections {
+    flowItemConnections {
       _id
       from {
         _id
