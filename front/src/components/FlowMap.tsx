@@ -28,11 +28,6 @@ export const FlowMap: FC<FlowMapProps> = props => {
 
     type Item = FlowMapProps["flow"]["flowItems"][number]
 
-    const [cameraSpring, setCameraSpring] = useSpring((): OffsetSpring => ({
-        left: 0,
-        top: 0,
-        transform: `scale(1)`,
-    }));
     const [targetZoom, setTargetZoom] = useState(1);
 
     useKeyPress(e => {
@@ -42,7 +37,14 @@ export const FlowMap: FC<FlowMapProps> = props => {
 
     const {width, height} = useWindowSize()
 
-    const itemIds = useMemo(() => props.flow.flowItems.map(it => it._id), [props.flow.flowItems])
+    const [cameraSpring, setCameraSpring] = useSpring((): OffsetSpring => ({
+        left: -width / 2,
+        top: -height / 2,
+        transform: `scale(1)`,
+    }));
+
+
+    const itemIds = useMemo(() => props.flow.flowItems.map(it => it._id), [props.flow.flowItems.length])
     const itemByIds = useMemo(() =>
         props.flow.flowItems.reduce(
             (acc, cur): Record<string, Item> => ({
@@ -50,7 +52,7 @@ export const FlowMap: FC<FlowMapProps> = props => {
                 [cur._id]: cur,
             }),
             {} as Record<string, Item>
-        ), [props.flow.flowItems]
+        ), [props.flow.flowItems.length]
     )
 
     const [itemPositions, setItemPositions] = useState(() =>
@@ -62,12 +64,13 @@ export const FlowMap: FC<FlowMapProps> = props => {
     )
 
     useEffect(() => {
-        setItemPositions(springLayout(4, 200, itemIds, width, height, props.flow.flowConnections.map(it => ({
+
+        setItemPositions(springLayout(100, 300, itemIds, width, height, props.flow.flowItemConnections.map(it => ({
             from: it.from._id,
             to: it.from._id
         })), populate(itemIds, itemPositions, width, height)))
-    }, [props.flow.flowItems.length])
 
+    }, [props.flow.flowItems.length])
 
     type ItemProps = { left: number, top: number }
 
@@ -77,7 +80,7 @@ export const FlowMap: FC<FlowMapProps> = props => {
     }))) as ItemProps[];
 
     const bind = useGesture({
-        onDrag: ({offset: [x, y], vxvy: [vx]}) =>
+        onDrag: ({offset: [x, y], vxvy: [vx] }) =>
             setCameraSpring({left: x, top: y}),
         onWheel: (state) => {
 
@@ -86,7 +89,7 @@ export const FlowMap: FC<FlowMapProps> = props => {
             const a = 200;
             const newTargetZoom = a / Math.max(state.offset[1] + a, a / maxZoomFactor);
 
-            console.log(newTargetZoom);
+            setTargetZoom(newTargetZoom)
 
             setCameraSpring({transform: `scale(${newTargetZoom})`});
 
@@ -113,7 +116,7 @@ export const FlowMap: FC<FlowMapProps> = props => {
                 />
             )}
 
-            {props.flow.flowConnections.map((a, i) =>
+            {props.flow.flowItemConnections.map((a, i) =>
                 <FlowItemConnectionComponent
                     key={i}
                     fromX={itemPositions[a.from._id]?.left ?? 0}

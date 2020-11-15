@@ -11,8 +11,8 @@ export const populate = (
     ids.reduce((acc, cur) => ({
         ...acc,
         [cur]: existing[cur] ?? {
-            left: Math.random() * width,
-            top: Math.random() * height
+            left: (Math.random() - .5) * width,
+            top: (Math.random() - .5) * height
         }
     }), {} as Record<string, Position>)
 
@@ -65,7 +65,7 @@ export const randomLayout = (ids: string[], width: number, height: number): Reco
     ids.reduce((acc, cur) => ({
         ...acc,
         [cur]: {
-            left: Math.random() * width,
-            top: Math.random() * height
+            left: (Math.random() - .5) * width,
+            top: (Math.random() - .5) * height
         }
     }), {} as Record<string, Position>);

@@ -63,7 +63,7 @@ export const Main: FC<unknown> = () => {
             }
 
         ],
-        flowConnections: [
+        flowItemConnections: [
             {_id: "0", from: {_id: "A"}, to: {_id: "B"}},
             {_id: "1", from: {_id: "B"}, to: {_id: "C"}},
             {_id: "2", from: {_id: "C"}, to: {_id: "A"}}
@@ -104,7 +104,7 @@ export const Main: FC<unknown> = () => {
             },
         }
         const otherEnd = example.flowItems[Math.floor(Math.random() * example.flowItems.length)]
-        const newConnection: WholeFlowQuery["flow"]["flowConnections"][number] = {
+        const newConnection: WholeFlowQuery["flow"]["flowItemConnections"][number] = {
             _id: Math.random().toString(),
             from: {_id: otherEnd._id},
             to: {_id: newID}
@@ -112,7 +112,7 @@ export const Main: FC<unknown> = () => {
 
         let update1 = update(example, {
             flowItems: a => [...a, newItem],
-            flowConnections: a => [...a, newConnection],
+            flowItemConnections: a => [...a, newConnection],
         });
         setExample(update1)
     }
