@@ -149,6 +149,7 @@ export const FlowMap: FC<FlowMapProps> = props => {
                     fromY={itemPositions[a.from._id]?.top ?? 0}
                     toX={itemPositions[a.to._id]?.left ?? 0}
                     toY={itemPositions[a.to._id]?.top ?? 0}
+                    description={a.description}
                 />
             )}
 

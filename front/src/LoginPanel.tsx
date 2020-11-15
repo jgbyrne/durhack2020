@@ -28,10 +28,12 @@ export const LoginPanel: FC<unknown> = () => {
                     type="text"
                     onChange={e => setUsername(e.target.value)}
                     value={username}
+                    placeholder="Username"
                 />
                 <input
                     type="password"
                     onSubmit={submit}
+                    placeholder="Password"
                 />
                 <button
                     type="button"

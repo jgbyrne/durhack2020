@@ -5,7 +5,8 @@ type LayoutFlowItemConnectionComponentProps = {
     fromX: number,
     fromY: number,
     toX: number,
-    toY: number
+    toY: number,
+    description: string
 };
 
 export const FlowItemConnectionComponent: FC<LayoutFlowItemConnectionComponentProps> = props => {
