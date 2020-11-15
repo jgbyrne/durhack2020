@@ -14,16 +14,16 @@ export type Scalars = {
 };
 
 export type InputDive = {
-  user: Scalars['ID'];
-  flow: Scalars['ID'];
+  user?: Maybe<Scalars['ID']>;
+  flow?: Maybe<Scalars['ID']>;
   createdAt: Scalars['Date'];
 };
 
 export type Dive = {
   __typename?: 'Dive';
   _id: Scalars['ID'];
-  user: User;
-  flow: Flow;
+  user?: Maybe<User>;
+  flow?: Maybe<Flow>;
   createdAt: Scalars['Date'];
 };
 
@@ -125,14 +125,14 @@ export type SearchItem = {
 };
 
 export type InputUser = {
-  name: Scalars['String'];
+  name?: Maybe<Scalars['String']>;
 };
 
 export type User = {
   __typename?: 'User';
-  _id: Scalars['ID'];
-  name: Scalars['String'];
-  flows: Array<Flow>;
+  _id?: Maybe<Scalars['ID']>;
+  name?: Maybe<Scalars['String']>;
+  flows?: Maybe<Array<Maybe<Flow>>>;
 };
 
 export type InputUserItem = {

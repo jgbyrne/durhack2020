@@ -25,16 +25,16 @@ export type Scalars = {
 };
 
 export type InputDive = {
-  user: Scalars['ID'];
-  flow: Scalars['ID'];
+  user?: Maybe<Scalars['ID']>;
+  flow?: Maybe<Scalars['ID']>;
   createdAt: Scalars['Date'];
 };
 
 export type Dive = {
   __typename?: 'Dive';
   _id: Scalars['ID'];
-  user: User;
-  flow: Flow;
+  user?: Maybe<User>;
+  flow?: Maybe<Flow>;
   createdAt: Scalars['Date'];
 };
 
@@ -136,14 +136,14 @@ export type SearchItem = {
 };
 
 export type InputUser = {
-  name: Scalars['String'];
+  name?: Maybe<Scalars['String']>;
 };
 
 export type User = {
   __typename?: 'User';
-  _id: Scalars['ID'];
-  name: Scalars['String'];
-  flows: Array<Flow>;
+  _id?: Maybe<Scalars['ID']>;
+  name?: Maybe<Scalars['String']>;
+  flows?: Maybe<Array<Maybe<Flow>>>;
 };
 
 export type InputUserItem = {
@@ -346,8 +346,8 @@ export type ResolversParentTypes = {
 
 export type DiveResolvers<ContextType = GraphQLContext, ParentType = ResolversParentTypes['Dive']> = {
   _id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
-  user?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
-  flow?: Resolver<ResolversTypes['Flow'], ParentType, ContextType>;
+  user?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>;
+  flow?: Resolver<Maybe<ResolversTypes['Flow']>, ParentType, ContextType>;
   createdAt?: Resolver<ResolversTypes['Date'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
@@ -414,9 +414,9 @@ export type SearchItemResolvers<ContextType = GraphQLContext, ParentType = Resol
 };
 
 export type UserResolvers<ContextType = GraphQLContext, ParentType = ResolversParentTypes['User']> = {
-  _id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
-  name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  flows?: Resolver<Array<ResolversTypes['Flow']>, ParentType, ContextType>;
+  _id?: Resolver<Maybe<ResolversTypes['ID']>, ParentType, ContextType>;
+  name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  flows?: Resolver<Maybe<Array<Maybe<ResolversTypes['Flow']>>>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
