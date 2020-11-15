@@ -12,10 +12,25 @@
     text-align: left;
     padding: 5px;
     box-sizing: border-box;
+    cursor: auto;
+    display: flex;
 }
 
 .SearchBar img {
     display: inline-block;
     height: 100%;
+}
 
+.SearchBar input {
+    border: none;
+    padding: 0;
+    background-color: transparent;
+    height: 100%;
+    font-size: 20px;
+    display: inline-block;
+    top: 0;
+}
+
+.SearchBar input:focus {
+    outline: none;
 }
