@@ -14,7 +14,7 @@ export const LoginPanel: FC<unknown> = () => {
     return <div className="LoginPanel">
 
         <div className="background">
-            {[...Array(Math.floor(window.innerWidth * window.innerHeight / 10000))].map(e => <div></div>)};
+            {[...Array(Math.floor(window.innerWidth * window.innerHeight / 1000))].map(e => <div></div>)};
         </div>
         <div className="middle">
             <img className="logo" src={flowormLogo}/>
