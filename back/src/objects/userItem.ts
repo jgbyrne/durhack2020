@@ -33,4 +33,15 @@ export const userItemResolvers: UserItemResolvers = {
 	     })
 	     .catch(err => _);
     },
+
+    item: async (userItem, _, {mongo}) => {
+        const url = `${process.env.CONTENT_SRV_URL}/item/${userItem.item}`;
+        const request = await fetch(url)
+
+        if (request.status === 200) {
+            return await request.json()
+        } else {
+            throw new ApolloError("Failed to fetch for userItem")
+        }
+    },
 }

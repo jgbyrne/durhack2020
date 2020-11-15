@@ -22,4 +22,15 @@ export const flowItemTypes = gql`
 export type IFlowItem = Omit<FlowItem, "flow" | "item"> & { flow: Scalars["ID"], item: Scalars["ID"] }
 export type IInputFlowItem = InputFlowItem
 
-export const flowItemResolvers: FlowItemResolvers = {}
+export const flowItemResolvers: FlowItemResolvers = {
+    item: async (flowItem, _, {mongo}) => {
+        const url = `${process.env.CONTENT_SRV_URL}/item/${userItem.item}`;
+        const request = await fetch(url)
+
+        if (request.status === 200) {
+            return await request.json()
+        } else {
+            throw new ApolloError("Failed to fetch for flowItem")
+        }
+    },
+}

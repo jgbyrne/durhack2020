@@ -10,7 +10,6 @@ export const entryTypes = gql`
         item(_id: ID!): Item!
 
         searchItem(name: String!, itemType: ItemType!): [SearchItem!]!
-
     }
 
     type Mutation {
@@ -26,7 +25,7 @@ export const entryTypes = gql`
 
 export const queryResolver: QueryResolvers = {
     item: async (_, {_id}) => {
-        const url = `http://localhost:7373/item/${_id}`;
+        const url = `${process.env.CONTENT_SRV_URL}/item/${_id}`;
         const request = await fetch(url)
 
         if (request.status === 200) {
@@ -37,7 +36,7 @@ export const queryResolver: QueryResolvers = {
     }
     ,
     searchItem: async (_, {name, itemType}) => {
-        const url = `http://localhost:7373/search/${itemType.toLowerCase()}?q=${name}`;
+        const url = `${process.env.CONTENT_SRV_URL}/search/${itemType.toLowerCase()}?q=${name}`;
         const request = await fetch(url)
 
         if (request.status === 200) {
