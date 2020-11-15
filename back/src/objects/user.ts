@@ -14,7 +14,6 @@ export const userTypes = gql`
 
         flows: [Flow!]!
 
-
     }
 
 `
