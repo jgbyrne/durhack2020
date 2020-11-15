@@ -1,0 +1,18 @@
+.FlowItemConnection {
+    & line {
+        width: 100%;
+        stroke: rgb(128, 205, 255);
+        stroke-width: 3px;
+    }
+    & path {
+        width: 100%;
+        stroke: rgb(128, 205, 255);
+        stroke-width: 3px;
+        fill: transparent;
+    }
+}
+
+.FlowItemConnection {
+    position: absolute;
+    z-index: -1;
+}

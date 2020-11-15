@@ -1,5 +1,5 @@
 import React, {FC} from "react";
-import "./FlowItemConnection.css"
+import "./FlowItemConnection.scss"
 
 type LayoutFlowItemConnectionComponentProps = {
     fromX: number,
@@ -17,20 +17,29 @@ export const FlowItemConnectionComponent: FC<LayoutFlowItemConnectionComponentPr
     const flipX = Math.sign(props.toX - props.fromX);
     const flipY = Math.sign(props.toY - props.fromY);
 
+    const width = upperX - lowerX;
+    const height = upperY - lowerY;
+
+
     return <svg
         className="FlowItemConnection"
         style={{
             left: `${lowerX + 50}px`,
             top: `${lowerY + 50}px`,
-            width: `${upperX - lowerX}px`,
-            height: `${upperY - lowerY}px`
+            width: `${width}px`,
+            height: `${height}px`
         }}
+        width={width}
+        height={height}
     >
-        <line
-            x1={`${50 + 50 * flipX}%`}
-            y1={`${50 + 50 * flipY}%`}
-            x2={`${50 - 50 * flipX}%`}
-            y2={`${50 - 50 * flipY}%`}
+        <path
+            d={`M ${(.5 + .5 * flipX) * width} ${(.5 + .5 * flipY) * height} 
+            C ${(.5 + .35 * flipX) * width} ${(.5 - .35 * flipY) * height}, 
+              ${(.5 - .35 * flipX) * width} ${(.5 + .35 * flipY) * height},
+              ${(.5 - .5 * flipX) * width} ${(.5 - .5 * flipY) * height}`}
+
+            fill="transparent"
         />
+
     </svg>;
 };

@@ -4,8 +4,8 @@
 }
 
 .LoginPanel .background {
-    height: 100%;
-    width: 100%;
+    height: 110%;
+    width: 110%;
     position: absolute;
     display: grid;
     grid-gap: 10px;
@@ -36,6 +36,8 @@
 
 .LoginPanel .logo {
     width: 100%;
+    margin-top: 30px;
+
 }
 
 .LoginPanel .user-icon {
@@ -49,7 +51,7 @@
 .LoginPanel form {
     background-color: white;
     border-radius: 35px;
-    box-shadow: 0 0 25px #80808080;
+    box-shadow: 0 0 30px rgba(128, 128, 128, 0.43);
     padding: 30px 35px;
     margin: 60px 30px 30px;
 }
@@ -63,14 +65,14 @@
     padding: 10px;
     height: 46px;
     border: none;
-    background-color: #F0F0F0;
+    background-color: #f6f6f6;
     border-radius: 25px;
-    box-shadow: inset 0 0 6px #808080A0;
+    box-shadow: inset 0 0 10px rgba(128, 128, 128, 0.28);
 }
 
 .LoginPanel form input:focus {
     outline: none;
-    border: 2px #D0D0D0 solid;
+    border: 2px rgba(208, 208, 208, 0.56) solid;
 }
 
 .LoginPanel form button {
@@ -79,12 +81,13 @@
     height: 46px;
     background-color: #1ecfff;
     border: none;
-    box-shadow: 0 0 20px #80808080;
+    box-shadow: 0 0 20px rgba(128, 128, 128, 0.34);
     margin-top: 40px;
     margin-bottom: 35px;
     border-radius: 25px;
     color: white;
-    font-weight: bold;
     font-size: 130%;
     padding: 0 30px;
+    font-family: "Gilroy", sans-serif;
+    font-weight: bold;
 }

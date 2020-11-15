@@ -1,5 +1,6 @@
 import {ApolloError, gql} from "apollo-server-express";
 import {InputUserItem, Scalars, UserItem, UserItemResolvers} from "../generated/graphql";
+import {IUser} from "./user";
 
 export const userItemTypes = gql`
 

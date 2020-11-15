@@ -1,20 +1,21 @@
 import React, {FC} from 'react';
 import './FlowItem.css';
+import {animated} from "react-spring";
 
 type FlowItemProps = {
     title: string,
     description: string,
     thumbnail: string,
 
-    x: number,
-    y: number,
+    left: number,
+    top: number,
 }
 
 export const FlowItemComponent: FC<FlowItemProps> = props =>
-    <div className="FlowItem" style={{left: props.x, top: props.y}}>
+    <animated.div className="FlowItem" style={{left: props.left, top: props.top}}>
         <img src={props.thumbnail + "?" + Math.random().toString()}/>
         <div className="floaty-text">
             <div className="name">{props.title}</div>
             <div className="description">{props.description}</div>
         </div>
-    </div>;
+    </animated.div>;

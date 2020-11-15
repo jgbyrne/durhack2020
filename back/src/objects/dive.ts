@@ -1,5 +1,6 @@
 import {gql} from "apollo-server-express";
 import {Dive, DiveResolvers, InputDive, Scalars} from "../generated/graphql";
+import {IUser} from "./user";
 
 export const diveTypes = gql`
 

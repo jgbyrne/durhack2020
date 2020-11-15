@@ -1,5 +1,6 @@
 import {gql} from "apollo-server-express";
 import {Flow, InputFlow, Scalars, UserFlow, UserFlowResolvers} from "../generated/graphql";
+import {IUser} from "./user";
 
 export const userFlowTypes = gql`
 

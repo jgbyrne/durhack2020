@@ -1,6 +1,7 @@
 import {ApolloError, gql} from "apollo-server-express";
 import {MutationResolvers, QueryResolvers} from "../generated/graphql";
 import fetch from "node-fetch"
+import {IUser} from "./user";
 
 export const entryTypes = gql`
 
@@ -17,8 +18,8 @@ export const entryTypes = gql`
         createDive(user: ID!, flow: ID!): Dive!
         createFlow(flow: InputFlow!): Flow! # this also creates FlowItems and FlowConnections
         createItem(item: InputItem!): Item!
-        createUser(user: InputUser): User!
-        createUserItem(user: InputUser): User!
+        createUser(user: InputUser!): User!
+        createUserItem(user: InputUser!): User!
 
     }
 `;
@@ -54,5 +55,3 @@ export const mutationResolver: MutationResolvers = {
     //     return await db.collection("users").insertOne({name: user?.name});
     // }
 };
-
-
