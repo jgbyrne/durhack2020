@@ -1,32 +1,9 @@
 import React, {FC, useContext, useState} from "react";
 import {Scalars, useWholeFlowQuery} from "./generated/graphql";
-import FlowMap from "./components/FlowMap";
+import {FlowMap} from "./components/FlowMap";
 import {LoginContext} from "./LoginContext";
 import {LoginPanel} from "./LoginPanel";
 import {LoadingSpinner} from "./LoadingSpinner";
-
-let flowItemData = [{
-    name: "Tempest Sonata",
-    description: "A more complex piece, ideal for the initiated",
-    thumbnail: "https://picsum.photos/200/200",
-    _id: "A",
-}, {
-    name: "Moonlight Sonata 1",
-    description: "A gentle and melancholy introduction to Beethoven",
-    thumbnail: "https://picsum.photos/200/200",
-    _id: "B",
-}, {
-    name: "Moonlight Sonata 1",
-    description: "A gentle and melancholy introduction to Beethoven",
-    thumbnail: "https://picsum.photos/200/200",
-    _id: "C",
-}];
-
-let flowItemConnectionData = [
-    {_id: "0", from: "A", to: "B"},
-    {_id: "1", from: "B", to: "C"},
-    {_id: "2", from: "C", to: "A"}
-];
 
 export const Main: FC<unknown> = () => {
 
@@ -46,7 +23,13 @@ export const Main: FC<unknown> = () => {
         </div>
     }
 
-    if (loading) {
+    if (loading || error || !data) {
+        return <div className="App">
+            <LoadingSpinner/>
+        </div>
+    }
+
+    if (!data) {
         return <div className="App">
             <LoadingSpinner/>
         </div>
@@ -54,8 +37,7 @@ export const Main: FC<unknown> = () => {
 
     return <div className="App">
         <FlowMap
-            flowItemData={flowItemData}
-            flowItemConnectionData={flowItemConnectionData}
+            flow={data.flow}
         />
     </div>;
 };
