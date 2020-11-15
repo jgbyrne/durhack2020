@@ -1,5 +1,6 @@
 import {ApolloServer} from "apollo-server-express";
 import {ExpressContext} from "apollo-server-express/dist/ApolloServer";
+import {MongoClient} from "mongodb";
 import compression from "compression";
 import cookieParser from "cookie-parser";
 import express from "express";
@@ -18,11 +19,13 @@ app.use(compression());
 app.use(morgan("dev"));
 app.disable("x-powered-by");
 
-const database = null;
 
 if (!process.env.MONGO_URL) {
     throw new Error("env.MONGO_URL is undefined, please configure the environment variables");
 }
+
+const database = new MongoClient(process.env.MONGO_URL);
+
 export type MongoContext = { mongo: any } //todo
 
 export type GraphQLContext = ExpressContext & MongoContext
@@ -43,3 +46,5 @@ const port = process.env.PORT || 4000;
 app.listen(port, () => {
     console.log(`Starting server on port ${port}`);
 });
+
+
