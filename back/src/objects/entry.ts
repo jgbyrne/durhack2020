@@ -18,7 +18,7 @@ export const entryTypes = gql`
         createDive(user: ID!, flow: ID!): Dive!
         createFlow(flow: InputFlow!): Flow! # this also creates FlowItems and FlowConnections
         createUser(user: InputUser!): User!
-        createUserItem(user: InputUser!): User!
+        createUserItem(user: InputUser!, item: Item!): UserItem!
 
     }
 `;
@@ -56,25 +56,28 @@ export const queryResolver: QueryResolvers = {
 };
 
 export const mutationResolver: MutationResolvers = {
+    createDive: async (_, {user, flow}, {db}) =>
+        (await db.collection("dives").insertOne({...user, createdAt: new Date().toISOString()}))?.ops[0] ?? (() => {
+            throw new ApolloError("Couldn't insert Dive")
+        })(),
+
     createUser: async (_, {user}, {db}) =>
         (await db.collection("users").insertOne({user}))?.ops[0] ?? (() => {
-            throw new ApolloError("Couldn't insert")
+            throw new ApolloError("Couldn't insert User")
         })(),
 
-    createUserItem: async (_, {user}, {db}) =>
-        (await db.collection("dives").insertOne({...user, createdAt: new Date().toISOString()}))?.ops[0] ?? (() => {
+    createFlow: async (_, {flow}, {db}) => {
+	const items = db.collection("flowItems").insert(flow.flowItems);
+	const conns = db.collection("flowItemCollections").insert(flow.flowConnections);
+	const result = [await items, await conns];
+	return await db.collection("flows").insertOne(flow)?.ops[0] ?? (() => {
             throw new ApolloError("Couldn't insert")
+        })();
+    }
+
+    createUserItem: async (_, {user, item}, {db}) =>
+        (await db.collection("userItems").insertOne({user, item}))?.ops[0] ?? (() => {
+            throw new ApolloError("Couldn't insert User Item")
         })(),
 
-    createDive: async (_, {user, flow}, {db}) =>
-        (await db.collection("users").find({user, flow, createdAt: new Date().toISOString()}))?.ops[0] ?? (() => {
-            throw new ApolloError("Couldn't insert")
-        })(),
-
-    createFlow: async (_, {flow}, {db}) =>
-        (await db.collection("users").insertOne({name: user?.name}))?.ops[0] ?? (() => {
-            throw new ApolloError("Couldn't insert")
-        })(),
-
-
-};
+   };
