@@ -15,7 +15,7 @@ export const userFlowTypes = gql`
     }
 `
 
-export type IUserFlow = Omit<UserFlow, "flowConnections" | "flowItem" | "owner"> & { owner: Scalars["ID"] }
+export type IUserFlow = Omit<UserFlow, "user" | "flow"> & { user: Scalars["ID"], flow: Scalars["ID"] }
 export type IInputUserFlow = InputFlow
 
 export const userFlowResolvers: UserFlowResolvers = {}
