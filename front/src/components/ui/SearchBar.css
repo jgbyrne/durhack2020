@@ -1,12 +1,12 @@
 .SearchBar {
     left: 0;
     right: 0;
-    margin: 10px auto;
+    margin: 15px auto;
     min-width: 300px;
     width: 40%;
     height: 40px;
     position: absolute;
-    background-color: #A0A0A0A0;
+    background-color: #E0E0E0A0;
     z-index: 1;
     border-radius: 20px;
 }
