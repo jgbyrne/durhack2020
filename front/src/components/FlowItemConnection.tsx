@@ -1,5 +1,6 @@
 // @ts-ignore
 import React, {FC} from "react";
+import "./FlowItemConnection.css"
 
 type LayoutFlowItemConnection = {
     from: string,
@@ -21,15 +22,13 @@ const FlowItemConnection: FC<LayoutFlowItemConnection> = props => {
 
     return <svg className="FlowItemConnection"
                 style={{
-                    position: "absolute",
-                    zIndex: -1,
                     left: `${lowerX + 50}px`,
                     top: `${lowerY + 50}px`,
                     width: `${upperX - lowerX}px`,
                     height: `${upperY - lowerY}px`
                 }}>
         <line x1={`${50 + 50 * flipX}%`} y1={`${50 + 50 * flipY}%`} x2={`${50 - 50 * flipX}%`}
-              y2={`${50 - 50 * flipY}%`} style={{width: "100%", stroke: "rgb(128,205,255)", strokeWidth: "5"}}/>
+              y2={`${50 - 50 * flipY}%`}/>
     </svg>;
 };
 

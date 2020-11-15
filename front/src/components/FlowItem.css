@@ -49,6 +49,7 @@
 .FlowItem .floaty-text .description {
     opacity: 0;
     pointer-events: none;
+    transition: opacity 150ms;
 }
 
 .FlowItem:hover .floaty-text .description {
