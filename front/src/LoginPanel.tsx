@@ -23,9 +23,20 @@ export const LoginPanel: FC<unknown> = () => {
                 submit()
             }}>
                 <img className="user-icon" src={userIcon}/>
-                <input autoFocus={true} type="text" onChange={e => setUsername(e.target.value)} value={username}/>
-                <input autoFocus={true} type="password"/>
-                <button type="button" onClick={submit}>Sign in</button>
+                <input
+                    autoFocus={true}
+                    type="text"
+                    onChange={e => setUsername(e.target.value)}
+                    value={username}
+                />
+                <input
+                    type="password"
+                    onSubmit={submit}
+                />
+                <button
+                    type="button"
+                    onClick={submit}
+                >Sign in</button>
             </form>
         </div>
 

@@ -205,12 +205,12 @@ export type MutationCreateItemArgs = {
 
 
 export type MutationCreateUserArgs = {
-  user?: Maybe<InputUser>;
+  user: InputUser;
 };
 
 
 export type MutationCreateUserItemArgs = {
-  user?: Maybe<InputUser>;
+  user: InputUser;
 };
 
 export type WholeFlowQueryVariables = Exact<{
