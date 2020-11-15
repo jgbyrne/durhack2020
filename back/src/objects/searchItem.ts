@@ -16,19 +16,19 @@ export const searchItemTypes = gql`
 
     }
 
-`
+`;
 
-export type ISearchItem = SearchItem // define in terms of gql types
+export type ISearchItem = SearchItem; // define in terms of gql types
 
 export const searchItemResolvers: SearchItemResolvers = {
     item: async searchItem => {
 
-        const request = await fetch(`${process.env.CONTENT_SRV_URL}/item/${searchItem.id}`)
+        const request = await fetch(`${process.env.CONTENT_SRV_URL}/item/${searchItem.id}`);
 
         if (request.status === 200) {
-            return await request.json()
+            return await request.json();
         } else {
-            throw new ApolloError("Failed to fetch")
+            throw new ApolloError("Failed to fetch");
         }
     }
-}
+};

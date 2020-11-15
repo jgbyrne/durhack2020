@@ -29,9 +29,9 @@ export const flowTypes = gql`
         owner: User
 
     }
-`
+`;
 
-export type IFlow = Omit<Flow, "flowConnections" | "flowItem" | "owner"> & { owner: Scalars["ID"] }
-export type IInputFlow = InputFlow
+export type IFlow = Omit<Flow, "flowConnections" | "flowItem" | "owner"> & { owner: Scalars["ID"] };
+export type IInputFlow = InputFlow;
 
-export const flowResolvers: FlowResolvers = {}
+export const flowResolvers: FlowResolvers = {};

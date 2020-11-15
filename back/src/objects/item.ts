@@ -35,9 +35,9 @@ export const itemTypes = gql`
         #    YouTube
     }
 
-`
+`;
 
-export type IItem = Omit<Item, "flowItem" | "flowItems"> // define in terms of gql types
-export type IInputItem = InputItem
+export type IItem = Omit<Item, "flowItem" | "flowItems">; // define in terms of gql types
+export type IInputItem = InputItem;
 
-export const itemResolvers: ItemResolvers = {}
+export const itemResolvers: ItemResolvers = {};

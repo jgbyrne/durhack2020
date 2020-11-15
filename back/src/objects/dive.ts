@@ -5,8 +5,8 @@ export const diveTypes = gql`
 
     input InputDive { # Othersie InputUserFlow
 
-        user: ID!
-        flow: ID!
+        user: ID
+        flow: ID
 
         createdAt: Date!
 
@@ -14,19 +14,19 @@ export const diveTypes = gql`
 
     type Dive { # Othersie UserFlow
         _id: ID!
-        user: User!
-        flow: Flow!
+        user: User
+        flow: Flow
 
         createdAt: Date!
 
     }
-`
+`;
 
-export type IDive = Omit<Dive, "user" | "flow"> & { user: Scalars["ID"], flow: Scalars["ID"] }
-export type IInputDive = InputDive
+export type IDive = Omit<Dive, "user" | "flow"> & { user: Scalars["ID"], flow: Scalars["ID"] };
+export type IInputDive = InputDive;
 
 export const diveResolvers: DiveResolvers = {
-    user: async (dive, _, {mongo}) => {
-        return await mongo.db("app_db").collection("users").findOne({_id: dive.user});
-    },
+    // user: async (dive, _, {db}) => {
+    //     return await db.collection("users").findOne({_id: dive.user});
+    // },
 }
