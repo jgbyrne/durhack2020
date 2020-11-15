@@ -216,12 +216,12 @@ export type MutationCreateItemArgs = {
 
 
 export type MutationCreateUserArgs = {
-  user?: Maybe<InputUser>;
+  user: InputUser;
 };
 
 
 export type MutationCreateUserItemArgs = {
-  user?: Maybe<InputUser>;
+  user: InputUser;
 };
 
 
@@ -439,8 +439,8 @@ export type MutationResolvers<ContextType = GraphQLContext, ParentType = Resolve
   createDive?: Resolver<ResolversTypes['Dive'], ParentType, ContextType, RequireFields<MutationCreateDiveArgs, 'user' | 'flow'>>;
   createFlow?: Resolver<ResolversTypes['Flow'], ParentType, ContextType, RequireFields<MutationCreateFlowArgs, 'flow'>>;
   createItem?: Resolver<ResolversTypes['Item'], ParentType, ContextType, RequireFields<MutationCreateItemArgs, 'item'>>;
-  createUser?: Resolver<ResolversTypes['User'], ParentType, ContextType, RequireFields<MutationCreateUserArgs, never>>;
-  createUserItem?: Resolver<ResolversTypes['User'], ParentType, ContextType, RequireFields<MutationCreateUserItemArgs, never>>;
+  createUser?: Resolver<ResolversTypes['User'], ParentType, ContextType, RequireFields<MutationCreateUserArgs, 'user'>>;
+  createUserItem?: Resolver<ResolversTypes['User'], ParentType, ContextType, RequireFields<MutationCreateUserItemArgs, 'user'>>;
 };
 
 export type Resolvers<ContextType = GraphQLContext> = {

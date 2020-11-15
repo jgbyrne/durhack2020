@@ -1,4 +1,4 @@
-import {gql} from "apollo-server-express";
+import {ApolloError, gql} from "apollo-server-express";
 import {FlowItem, FlowItemResolvers, InputFlowItem, Scalars} from "../generated/graphql";
 
 export const flowItemTypes = gql`
@@ -23,8 +23,8 @@ export type IFlowItem = Omit<FlowItem, "flow" | "item"> & { flow: Scalars["ID"],
 export type IInputFlowItem = InputFlowItem
 
 export const flowItemResolvers: FlowItemResolvers = {
-    item: async (flowItem, _, {mongo}) => {
-        const url = `${process.env.CONTENT_SRV_URL}/item/${userItem.item}`;
+    item: async flowItem => {
+        const url = `${process.env.CONTENT_SRV_URL}/item/${flowItem.item}`;
         const request = await fetch(url)
 
         if (request.status === 200) {
