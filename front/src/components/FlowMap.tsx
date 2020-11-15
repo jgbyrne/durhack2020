@@ -31,6 +31,7 @@ export const FlowMap: FC<FlowMapProps> = props => {
     const [targetZoom, setTargetZoom] = useState(1);
 
     useKeyPress(e => {
+        console.log(e)
         props.addItem()
         return true;
     })

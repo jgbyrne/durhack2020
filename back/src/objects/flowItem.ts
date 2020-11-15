@@ -6,7 +6,7 @@ export const flowItemTypes = gql`
 
     input InputFlowItem {
         flow: ID!
-        item: ID!
+        item: String!
     }
 
     type FlowItem {
@@ -26,12 +26,11 @@ export type IInputFlowItem = InputFlowItem;
 export const flowItemResolvers: FlowItemResolvers = {
     item: async (flowItem, _, {db}) => {
         const url = `${process.env.CONTENT_SRV_URL}/item/${flowItem.item}`;
-        console.log(url)
         const request = await fetch(url)
 
-        console.log(request.status)
         if (request.status === 200) {
-            return await request.json();
+            const result = await request.json();
+            return {...result, _id: result.id};
         } else {
             throw new ApolloError("Failed to fetch for flowItem");
         }

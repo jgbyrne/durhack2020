@@ -17,7 +17,7 @@ export const itemTypes = gql`
         title: String!
         subtitle: String!
 
-        url: String!
+        url: String
         type: ItemType!
 
         thumbnail: String!

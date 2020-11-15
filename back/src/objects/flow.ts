@@ -47,10 +47,9 @@ export const flowResolvers: FlowResolvers = {
             throw new ApolloError("Couldn't find flowItemConnections")
         })(),
 
-    owner: async (flow, _, {db}) => {
-        console.log(flow.owner)
-        return await db.collection("user").findOne({_id: new ObjectId(flow.owner)}) ?? (() => {
+    owner: async (flow, _, {db}) =>
+        await db.collection("users").findOne({_id: new ObjectId(flow.owner)}) ?? (() => {
             throw new ApolloError("Couldn't find Owner")
-        })();
-    },
+        })()
+
 };
