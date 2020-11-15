@@ -44,7 +44,7 @@ def search(item_type):
                     "id": temp_id,
                     "title": item["name"],
                     "subtitle": item["artist_name"],
-                    "type": "album"
+                    "type": "Album"
                 })
                 temp_items[temp_id] = (item, set_id)
                 item_set.add(temp_id)
@@ -62,6 +62,7 @@ def transform_album(item_id, album):
                 "year": album["year"],
                 "image": "{}/item/{}/image".format(URL, item_id),
                 "thumbnail": "{}/item/{}/thumbnail".format(URL, item_id),
+                "type": album["type"]
             }
 
 @app.route('/item/<string:item_id>/', methods=['GET'])

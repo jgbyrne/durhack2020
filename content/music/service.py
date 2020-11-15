@@ -42,7 +42,7 @@ class Music:
 
         if album := c.fetchone():
             return {"album_id": album[0], "name": album[1], "year": album[2],
-                    "artist_id": album[3], "artist_name": album[4]}
+                    "artist_id": album[3], "artist_name": album[4], "type": "Album"}
 
         try:
            album_info = mbz.get_release_group_by_id(album_id,
@@ -75,7 +75,7 @@ class Music:
         conn.commit()
 
         return {"album_id": album_id, "name": name, "year": year,
-                "artist_id": artist_id, "artist_name": artist_name}
+                "artist_id": artist_id, "artist_name": artist_name, "type": "Album"}
 
     def _download_art(self, album_id):
         resp = requests.get("http://coverartarchive.org/release-group/{}".format(album_id))
