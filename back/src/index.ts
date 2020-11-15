@@ -19,7 +19,6 @@ app.use(compression());
 app.use(morgan("dev"));
 app.disable("x-powered-by");
 
-
 if (!process.env.MONGO_URL) {
     throw new Error("env.MONGO_URL is undefined, please configure the environment variables");
 }
@@ -37,7 +36,7 @@ const apolloServer = new ApolloServer({
     schema: gqlSchema,
     context: async (context): Promise<GraphQLContext> => ({
         ...context,
-        ...{mongo: await (async () => { await database.connect(); return database; })()},
+        ...{mongo: await database.connect()},
     }),
 });
 apolloServer.applyMiddleware({app, path: "/graphql"});
