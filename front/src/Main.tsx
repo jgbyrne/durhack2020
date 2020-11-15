@@ -22,7 +22,7 @@ let flowItemData = [{
 let flowItemConnectionData = [
     {_id: "0", from: "A", to: "B"},
     {_id: "1", from: "B", to: "C"},
-    {_id: "2", from: "B", to: "D"}
+    {_id: "2", from: "C", to: "A"}
 ];
 
 export const Main: FC<unknown> = () => {
