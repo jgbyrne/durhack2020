@@ -6,8 +6,8 @@ export const diveTypes = gql`
 
     input InputDive { # Othersie InputUserFlow
 
-        user: ID
-        flow: ID
+        user: ID!
+        flow: ID!
 
         createdAt: Date!
 
@@ -15,8 +15,8 @@ export const diveTypes = gql`
 
     type Dive { # Othersie UserFlow
         _id: ID!
-        user: User
-        flow: Flow
+        user: User!
+        flow: Flow!
 
         createdAt: Date!
 

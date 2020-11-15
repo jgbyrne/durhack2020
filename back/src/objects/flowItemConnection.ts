@@ -12,7 +12,7 @@ export const flowItemConnectionTypes = gql`
 
     type FlowItemConnection {
         _id: ID!
-        flow: Flow
+        flow: Flow!
 
         description: String!
 

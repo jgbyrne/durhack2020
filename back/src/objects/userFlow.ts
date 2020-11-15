@@ -5,8 +5,8 @@ import {IUser} from "./user";
 export const userFlowTypes = gql`
 
     input InputUserFlow {
-        user: ID
-        flow: ID
+        user: ID!
+        flow: ID!
     }
 
     type UserFlow {

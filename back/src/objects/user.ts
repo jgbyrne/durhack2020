@@ -4,15 +4,15 @@ import {InputUser, User, UserResolvers} from "../generated/graphql";
 export const userTypes = gql`
 
     input InputUser {
-        name: String
+        name: String!
     }
 
 
     type User {
-        _id: ID
-        name: String
+        _id: ID!
+        name: String!
 
-        flows: [Flow]
+        flows: [Flow!]!
 
     }
 

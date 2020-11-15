@@ -4,8 +4,8 @@ import {FlowItem, FlowItemResolvers, InputFlowItem, Scalars} from "../generated/
 export const flowItemTypes = gql`
 
     input InputFlowItem {
-        flow: ID
-        item: ID
+        flow: ID!
+        item: ID!
     }
 
     type FlowItem {
