@@ -1,0 +1,90 @@
+.LoginPanel {
+    height: 100%;
+    width: 100%;
+}
+
+.LoginPanel .background {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    display: grid;
+    grid-gap: 10px;
+    left: 0;
+    top: 0;
+    background-color: white;
+    grid-template-columns: repeat(auto-fill, 100px);
+    grid-template-rows: repeat(auto-fill, 100px);
+    z-index: -1;
+    box-shadow: inset 0 0 300px white;
+}
+
+.LoginPanel .background > * {
+    border-radius: 25%;
+    box-shadow: 0 0 20px #80808030;
+}
+
+
+.LoginPanel .middle {
+    position: absolute;
+    z-index: 1;
+    max-width: 400px;
+    width: 100%;
+    margin: 20px auto;
+    left: 0;
+    right: 0;
+}
+
+.LoginPanel .logo {
+    width: 100%;
+}
+
+.LoginPanel .user-icon {
+    display: block;
+    width: 50px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 20px;
+}
+
+.LoginPanel form {
+    background-color: white;
+    border-radius: 35px;
+    box-shadow: 0 0 25px #80808080;
+    padding: 30px 35px;
+    margin: 60px 30px 30px;
+}
+
+.LoginPanel form input {
+    display: block;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    box-sizing: border-box;
+    width: 100%;
+    padding: 10px;
+    height: 46px;
+    border: none;
+    background-color: #F0F0F0;
+    border-radius: 25px;
+    box-shadow: inset 0 0 6px #808080A0;
+}
+
+.LoginPanel form input:focus {
+    outline: none;
+    border: 2px #D0D0D0 solid;
+}
+
+.LoginPanel form button {
+    cursor: pointer;
+    box-sizing: border-box;
+    height: 46px;
+    background-color: #1ecfff;
+    border: none;
+    box-shadow: 0 0 20px #80808080;
+    margin-top: 40px;
+    margin-bottom: 35px;
+    border-radius: 25px;
+    color: white;
+    font-weight: bold;
+    font-size: 130%;
+    padding: 0 30px;
+}
