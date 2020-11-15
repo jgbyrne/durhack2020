@@ -48,4 +48,11 @@ export const queryResolver: QueryResolvers = {
 	return await mongo.db("app_db").collection("users").findOne({_id});
     }
 }
-export const mutationResolver: MutationResolvers = {}
+
+export const mutationResolver: MutationResolvers = {
+    createUser: async (_, {user}, {mongo}) => {
+        return await mongo.db("app_db").collection("users").insertOne({name: user.name});
+    }
+}
+
+
