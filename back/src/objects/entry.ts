@@ -22,7 +22,7 @@ export const entryTypes = gql`
         createUserItem(user: InputUser!): User!
 
     }
-`
+`;
 
 export const queryResolver: QueryResolvers = {
     item: async (_, {_id}) => {
@@ -45,17 +45,13 @@ export const queryResolver: QueryResolvers = {
             throw new ApolloError("Failed to search")
         }
     },
-    user: async (_, {_id}, {mongo}) =>
-        await mongo
-            .db("app_db")
-            .collection("users")
-            .findOne({_id}) as IUser
-}
+    // user: async (_, {_id}, {db}) => {
+    // 	return await db.collection("users").findOne({_id});
+    // }
+};
 
 export const mutationResolver: MutationResolvers = {
-    // createUser: async (_, {user}, {mongo}) => {
-    //     return await mongo.db("app_db").collection("users").insertOne({name: user.name});
+    // createUser: async (_, {user}, {db}) => {
+    //     return await db.collection("users").insertOne({name: user?.name});
     // }
-}
-
-
+};

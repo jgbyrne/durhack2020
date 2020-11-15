@@ -1,7 +1,7 @@
 import {FlowItemComponent} from "./FlowItemComponent"
-import React, {FC, useState} from 'react';
+import React, {FC, useEffect, useMemo, useState} from 'react';
 import './FlowMap.css';
-import {Position, randomLayout} from "../logic/layout";
+import {Position, randomLayout, springLayout} from "../logic/layout";
 import {useGesture} from 'react-use-gesture'
 import {animated, useSpring, useSprings} from 'react-spring'
 import SearchBar from "./ui/SearchBar";
@@ -40,15 +40,24 @@ export const FlowMap: FC<FlowMapProps> = props => {
 
     const {width, height} = useWindowSize()
 
+    const itemIds = useMemo(() => props.flow.flowItems.map(it => it._id), [props.flow.flowItems])
+
     const [itemPositions, setItemPositions] = useState(() =>
         randomLayout(
-            props.flow.flowItems.length,
+            itemIds,
             width,
             height,
         )
     )
 
-    const springs = useSprings<Position, Position>(itemPositions.length, itemPositions)
+    useEffect(() => {
+        setItemPositions(springLayout(10, 400, itemIds, width, height, props.flow.flowConnections.map(it => ({
+            from: it.from._id,
+            to: it.from._id
+        }))))
+    }, [props.flow.flowItems])
+
+    // const springs = useSprings<Position, Position>(0, itemPositions)
 
     const bind = useGesture({
         onDrag: ({offset: [x, y], vxvy: [vx]}) =>
@@ -86,17 +95,21 @@ export const FlowMap: FC<FlowMapProps> = props => {
                     key={i}
                     {...item}
                     {...item.item}
-                    {...springs[i]}
+
+                    left={0}
+                    top={0}
                 />
             )}
             {props.flow.flowConnections.map((a, i) =>
-                <FlowItemConnectionComponent
+                <div>asd</div>
+                /*<FlowItemConnectionComponent
                     key={i}
                     fromX={itemPositions[indicesFrom[i]].left}
                     toX={itemPositions[indicesTo[i]].left}
                     fromY={itemPositions[indicesFrom[i]].top}
                     toY={itemPositions[indicesTo[i]].top}
-                />)}
+                />*/
+            )}
         </animated.div>
     </div>;
 };
