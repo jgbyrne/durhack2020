@@ -3,9 +3,9 @@
     right: 0;
     margin: 10px auto;
     width: 320px;
-    height: 32px;
+    height: 40px;
     position: absolute;
-    background-color: #80808080;
+    background-color: #A0A0A0A0;
     z-index: 1;
-    border-radius: 16px;
+    border-radius: 20px;
 }

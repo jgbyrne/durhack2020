@@ -5,7 +5,7 @@ import FlowItemConnection from "./FlowItemConnection";
 import {springLayout} from "../logic/layout";
 import {useGesture} from 'react-use-gesture'
 import {animated, useSpring} from 'react-spring'
-import SearchBar from "./SearchBar";
+import SearchBar from "./ui/SearchBar";
 
 type FlowItem = {
     _id: string,
