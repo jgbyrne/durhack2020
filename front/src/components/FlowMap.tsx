@@ -1,7 +1,6 @@
+import {FlowItemComponent} from "./FlowItemComponent"
 import React, {FC, useMemo} from 'react';
 import './FlowMap.css';
-import FlowItem from "./FlowItem";
-import FlowItemConnection from "./FlowItemConnection";
 import {springLayout} from "../logic/layout";
 import {useGesture} from 'react-use-gesture'
 import {animated, useSpring} from 'react-spring'
@@ -9,13 +8,8 @@ import SearchBar from "./ui/SearchBar";
 import UserMenu from "./ui/UserMenu";
 import Brand from "./ui/Brand";
 import ArrowButton from "./ui/ArrowButton";
-
-type FlowItem = {
-    _id: string,
-    description: string,
-    thumbnail: string,
-    name: string,
-}
+import {WholeFlowQuery} from "../generated/graphql";
+import {FlowItemConnectionComponent} from "./FlowItemConnection";
 
 type FlowItemConnection = {
     _id: string,
@@ -23,20 +17,19 @@ type FlowItemConnection = {
     to: string
 }
 
-type FlowMap = {
-    flowItemData: FlowItem[],
-    flowItemConnectionData: FlowItemConnection[]
+type FlowMapProps = & {
+    flow: WholeFlowQuery["flow"]
+    // flowItemData: FlowItem[],
+    // flowItemConnectionData: FlowItemConnection[],
 };
 
-const FlowMap: FC<FlowMap> = props => {
 
-    type OffsetSpring = {
-        left: number,
-        top: number,
-    }
-    type SpringType = {
-        wheelOffset: number
-    }
+type OffsetSpring = {
+    left: number,
+    top: number,
+}
+
+export const FlowMap: FC<FlowMapProps> = props => {
 
     const [springOffset, setSpringOffset] = useSpring((): OffsetSpring => ({left: 0, top: 0,}));
     const [wheelOffset, setWheelOffset] = useSpring(() => 0);
@@ -54,18 +47,19 @@ const FlowMap: FC<FlowMap> = props => {
         }
     });
 
-    let flowItemPositions = useMemo(() =>
-            springLayout(props.flowItemData.map(e => e._id), props.flowItemConnectionData.map(c => ({
-                from: c.from,
-                to: c.to
-            }))),
-        [props.flowItemData]
+    const flowItemPositions = useMemo(() =>
+            springLayout(
+                props.flow.flowItems.map(e => e._id),
+                props.flow.flowConnections.map(c => ({
+                    from: c.from._id,
+                    to: c.to._id
+                }))
+            ),
+        [props.flow]
     );
 
-    let indicesFrom = props.flowItemConnectionData.map(c => props.flowItemData.findIndex((a) => c.from == a._id));
-    let indicesTo = props.flowItemConnectionData.map(c => props.flowItemData.findIndex((a) => c.to == a._id));
-
-    console.log(indicesFrom, indicesTo);
+    let indicesFrom = props.flow.flowConnections.map(c => props.flow.flowItems.findIndex(a => c.from._id == a._id));
+    let indicesTo = props.flow.flowConnections.map(c => props.flow.flowItems.findIndex(a => c.to._id == a._id));
 
     return <div {...bind()} className="FlowMap">
         <Brand/>
@@ -75,13 +69,22 @@ const FlowMap: FC<FlowMap> = props => {
         <ArrowButton direction={"Left"}/>
         <ArrowButton direction={"Right"}/>
 
+        {props.flow.name}
+        {props.flow.description}
+        {props.flow.owner?.name}
+        {props.flow}
+
         <animated.div className={"FlowMap-inner"} style={springOffset}>
-            {props.flowItemData.map((a, i) =>
-                <FlowItem key={i} {...{...a, ...flowItemPositions[i]}}/>
+            {props.flow.flowItems.map((item, i) =>
+                <FlowItemComponent
+                    key={i}
+                    {...item}
+                    {...item.item}
+                    {...flowItemPositions[i]}
+                />
             )}
-            {props.flowItemConnectionData.map((a, i) =>
-                <FlowItemConnection
-                    {...a}
+            {props.flow.flowConnections.map((a, i) =>
+                <FlowItemConnectionComponent
                     fromX={flowItemPositions[indicesFrom[i]].x}
                     toX={flowItemPositions[indicesTo[i]].x}
                     fromY={flowItemPositions[indicesFrom[i]].y}
@@ -91,5 +94,3 @@ const FlowMap: FC<FlowMap> = props => {
 
     </div>;
 };
-
-export default FlowMap;
