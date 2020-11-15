@@ -1,0 +1,28 @@
+.Modal {
+    height: 100%;
+    width: 100%;
+}
+
+
+.Modal .middle {
+    position: absolute;
+    z-index: 1;
+    max-width: 400px;
+    width: 100%;
+    margin: 20px auto;
+    left: 0;
+    right: 0;
+}
+
+.Modal .logo {
+    width: 100%;
+    margin-top: 30px;
+}
+
+.Modal .user-icon {
+    display: block;
+    width: 50px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 20px;
+}

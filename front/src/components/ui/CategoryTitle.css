@@ -1,0 +1,18 @@
+.CategoryTitle {
+    position: absolute;
+    width: fit-content;
+    left: 0;
+    right: 0;
+    margin: 20px auto;
+    z-index: 1;
+}
+
+.CategoryTitle img {
+    width: 60px;
+    height: 60px;
+}
+
+.CategoryTitle .text {
+    font-size: 200%;
+    font-weight: bold;
+}

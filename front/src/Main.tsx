@@ -103,11 +103,11 @@ export const Main: FC<unknown> = () => {
                 image: "https://picsum.photos/200/200",
             },
         }
-        const otherEnd = example.flowItems[Math.floor(Math.random() * example.flowItems.length)]
+        const otherEnd = example.flowItems[Math.floor((0.8 + Math.random() * 0.199) * example.flowItems.length)];
         const newConnection: WholeFlowQuery["flow"]["flowItemConnections"][number] = {
             _id: Math.random().toString(),
             from: {_id: otherEnd._id},
-            to: {_id: newID}
+            to: {_id: newItem._id}
         }
 
         let update1 = update(example, {

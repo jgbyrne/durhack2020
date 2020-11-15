@@ -97,7 +97,7 @@ export const FlowMap: FC<FlowMapProps> = props => {
             const a = 200;
             const newTargetZoom = a / Math.max(state.offset[1] + a, a / maxZoomFactor);
 
-            setTargetZoom(newTargetZoom)
+            setTargetZoom(newTargetZoom);
 
             setCameraSpring({transform: `scale(${newTargetZoom})`});
 

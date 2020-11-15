@@ -45,7 +45,7 @@ export const springLayout = (
                 let dd = 0;
                 if (sprung) {
                     if (d - springLength < 0) {
-                        dd = 1 / (d / springLength * 2 + 1);
+                        dd = 1 / (d / (springLength + 1));
                     } else {
                         dd = springLength - d;
                     }
