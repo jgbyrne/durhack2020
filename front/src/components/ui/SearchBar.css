@@ -2,7 +2,8 @@
     left: 0;
     right: 0;
     margin: 10px auto;
-    width: 320px;
+    min-width: 300px;
+    width: 40%;
     height: 40px;
     position: absolute;
     background-color: #A0A0A0A0;

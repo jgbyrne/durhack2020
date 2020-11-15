@@ -6,6 +6,9 @@ import {springLayout} from "../logic/layout";
 import {useGesture} from 'react-use-gesture'
 import {animated, useSpring} from 'react-spring'
 import SearchBar from "./ui/SearchBar";
+import UserMenu from "./ui/UserMenu";
+import Brand from "./ui/Brand";
+import ArrowButton from "./ui/ArrowButton";
 
 type FlowItem = {
     _id: string,
@@ -64,11 +67,11 @@ const FlowMap: FC<FlowMap> = props => {
 
     console.log(indicesFrom, indicesTo);
 
-    return <div
-        {...bind()}
-        className="FlowMap"
-    >
+    return <div {...bind()} className="FlowMap">
+        <Brand/>
         <SearchBar/>
+        <UserMenu/>
+        <ArrowButton/>
         <animated.div className={"FlowMap-inner"} style={springOffset}>
             {props.flowItemData.map((a, i) =>
                 <FlowItem key={i} {...{...a, ...flowItemPositions[i]}}/>

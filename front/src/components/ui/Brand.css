@@ -1,0 +1,16 @@
+.Brand {
+    height: 40px;
+    position: absolute;
+    margin: 10px;
+    left: 0;
+    top: 0;
+    color: #61dafb;
+    z-index: 1;
+}
+
+.Brand:before {
+    content: "floworm";
+    font-weight: bold;
+    font-size: 30px;
+    line-height: 40px;
+}
