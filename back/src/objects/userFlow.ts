@@ -18,4 +18,8 @@ export const userFlowTypes = gql`
 export type IUserFlow = Omit<UserFlow, "user" | "flow"> & { user: Scalars["ID"], flow: Scalars["ID"] }
 export type IInputUserFlow = InputFlow
 
-export const userFlowResolvers: UserFlowResolvers = {}
+export const userFlowResolvers: UserFlowResolvers = {
+    user: async (userFlow, _, {mongo}) => {
+        return await mongo.db("app_db").collection("users").findOne({_id: userFlow.user});
+    },
+}

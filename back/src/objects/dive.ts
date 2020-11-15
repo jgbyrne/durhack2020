@@ -25,4 +25,8 @@ export const diveTypes = gql`
 export type IDive = Omit<Dive, "user" | "flow"> & { user: Scalars["ID"], flow: Scalars["ID"] }
 export type IInputDive = InputDive
 
-export const diveResolvers: DiveResolvers = {}
+export const diveResolvers: DiveResolvers = {
+    user: async (dive, _, {mongo}) => {
+        return await mongo.db("app_db").collection("users").findOne({_id: dive.user});
+    },
+}

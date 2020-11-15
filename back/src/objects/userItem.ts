@@ -27,11 +27,7 @@ export type IInputUserItem = InputUserItem
 
 export const userItemResolvers: UserItemResolvers = {
     user: async (userItem, _, {mongo}) => {
-	mongo.db("app_db").collection("users")
-	     .findOne({_id : userItem.user}).then(result => {
-	        return result;
-	     })
-	     .catch(err => _);
+        return await mongo.db("app_db").collection("users").findOne({_id : userItem.user});
     },
 
     item: async (userItem, _, {mongo}) => {

@@ -33,8 +33,7 @@ export const queryResolver: QueryResolvers = {
         } else {
             throw new ApolloError("Failed to fetch")
         }
-    }
-    ,
+    },
     searchItem: async (_, {name, itemType}) => {
         const url = `${process.env.CONTENT_SRV_URL}/search/${itemType.toLowerCase()}?q=${name}`;
         const request = await fetch(url)
@@ -44,6 +43,9 @@ export const queryResolver: QueryResolvers = {
         } else {
             throw new ApolloError("Failed to search")
         }
+    },
+    user: async(_, {_id}, {mongo}) => {
+	return await mongo.db("app_db").collection("users").findOne({_id});
     }
 }
 export const mutationResolver: MutationResolvers = {}
