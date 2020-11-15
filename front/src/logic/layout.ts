@@ -36,8 +36,13 @@ export const springLayout = (iterations: number,
                 let cx = dd * Math.cos(a) * lambda;
                 let cy = dd * Math.sin(a) * lambda;
 
-                rec[k1].left += cx;
-                rec[k1].top += cy;
+                if (connections.findIndex(c => c.from === k1 && c.to === k2) !== -1) {
+                    rec[k1].left += cx;
+                    rec[k1].top += cy;
+                } else {
+                    rec[k1].left -= cx;
+                    rec[k1].top -= cy;
+                }
             }
         }));
     }
