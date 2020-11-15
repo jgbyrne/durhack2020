@@ -13,6 +13,7 @@ import ArrowButton from "./ui/ArrowButton";
 import {WholeFlowQuery} from "../generated/graphql";
 import {FlowItemConnectionComponent} from "./FlowItemConnection";
 import {useKeyPress, useWindowSize} from "react-use";
+import CategoryTitle from "./ui/CategoryTitle";
 import {QueryTuple} from "@apollo/client";
 import "./Modal.scss"
 
@@ -116,7 +117,7 @@ export const FlowMap: FC<FlowMapProps> = props => {
     return <div {...bind()} className="FlowMap">
         <div className="top-bar">
             <Brand/>
-            <SearchBar/>
+            <CategoryTitle/>
             <UserMenu/>
         </div>
 
