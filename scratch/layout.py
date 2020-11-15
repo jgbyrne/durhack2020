@@ -54,6 +54,7 @@ def layout(graph):
                         ys[y] = 1
                     else:
                         ys[y] += 1
+            
             xs = [x[0] for x in sorted(xs.items(), key=lambda x: -x[1])]
             ys = [y[0] for y in sorted(ys.items(), key=lambda y: -y[1])]
 
