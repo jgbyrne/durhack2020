@@ -9,4 +9,13 @@
     background-color: #E0E0E0A0;
     z-index: 1;
     border-radius: 20px;
+    text-align: left;
+    padding: 5px;
+    box-sizing: border-box;
+}
+
+.SearchBar img {
+    display: inline-block;
+    height: 100%;
+
 }
