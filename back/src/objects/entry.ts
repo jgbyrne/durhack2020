@@ -17,7 +17,6 @@ export const entryTypes = gql`
 
         createDive(user: ID!, flow: ID!): Dive!
         createFlow(flow: InputFlow!): Flow! # this also creates FlowItems and FlowConnections
-        createItem(item: InputItem!): Item!
         createUser(user: InputUser!): User!
         createUserItem(user: InputUser!): User!
 
@@ -49,11 +48,33 @@ export const queryResolver: QueryResolvers = {
         await db.collection("users").findOne({_id}) ?? (() => {
             throw new ApolloError("Couldn't find")
         })(),
+    flow: async (_, {_id}, {db}) =>
+        await db.collection("flows").findOne({_id}) ?? (() => {
+            throw new ApolloError("Couldn't find Flow")
+        })(),
+
 };
 
 export const mutationResolver: MutationResolvers = {
     createUser: async (_, {user}, {db}) =>
+        (await db.collection("users").insertOne({user}))?.ops[0] ?? (() => {
+            throw new ApolloError("Couldn't insert")
+        })(),
+
+    createUserItem: async (_, {user}, {db}) =>
+        (await db.collection("dives").insertOne({...user, createdAt: new Date().toISOString()}))?.ops[0] ?? (() => {
+            throw new ApolloError("Couldn't insert")
+        })(),
+
+    createDive: async (_, {user, flow}, {db}) =>
+        (await db.collection("users").find({user, flow, createdAt: new Date().toISOString()}))?.ops[0] ?? (() => {
+            throw new ApolloError("Couldn't insert")
+        })(),
+
+    createFlow: async (_, {flow}, {db}) =>
         (await db.collection("users").insertOne({name: user?.name}))?.ops[0] ?? (() => {
             throw new ApolloError("Couldn't insert")
-        })()
+        })(),
+
+
 };
