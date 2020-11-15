@@ -2,14 +2,29 @@ type BasicFlowItemConnection = { from: string, to: string };
 
 export type Position = { left: number, top: number }
 
-export const springLayout = (ids: string[], connections: BasicFlowItemConnection[], maxIter = 100, springLength = 400): Position[] =>
-    ids.map(id => ({
-        left: Math.random() * 1000,
-        top: Math.random() * 1000
-    }));
+export const populate = (iterations: number, springLength = 400, ids: string[], width: number, height: number, connections: BasicFlowItemConnection[]): Record<string, Position> =>
+    ids.reduce((acc, cur) => ({
+        ...acc,
+        [cur]: {
+            left: Math.random() * 1000,
+            top: Math.random() * 1000
+        }
+    }), {} as Record<string, Position>);
 
-export const randomLayout = (amount: number, width: number, height: number): Position[] =>
-    Array(amount).fill(0).map(_ => ({
-        left: Math.random() * width,
-        top: Math.random() * height
-    }));
+export const springLayout = (iterations: number, springLength = 400, ids: string[], width: number, height: number, connections: BasicFlowItemConnection[]): Record<string, Position> =>
+    ids.reduce((acc, cur) => ({
+        ...acc,
+        [cur]: {
+            left: Math.random() * 1000,
+            top: Math.random() * 1000
+        }
+    }), {} as Record<string, Position>);
+
+export const randomLayout = (ids: string[], width: number, height: number): Record<string, Position> =>
+    ids.reduce((acc, cur) => ({
+        ...acc,
+        [cur]: {
+            left: Math.random() * width,
+            top: Math.random() * height
+        }
+    }), {} as Record<string, Position>);
