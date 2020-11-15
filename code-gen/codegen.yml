@@ -33,8 +33,6 @@ generates:
       mappers:
         Dive: ../objects/dive#IDive
         InputDive: ../objects/dive#IInputDive
-        UserFlow: ../objects/userFlow#IUserFlow
-        InputUserFlow: ../objects/userFlow#IInputUserFlow
         Flow: ../objects/flow#IFlow
         InputFlow: ../objects/flow#IInputFlow
         FlowItem: ../objects/flowItem#IFlowItem

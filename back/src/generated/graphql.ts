@@ -1,6 +1,5 @@
 import { GraphQLResolveInfo, GraphQLScalarType, GraphQLScalarTypeConfig } from 'graphql';
 import { IDive, IInputDive } from '../objects/dive';
-import { IUserFlow, IInputUserFlow } from '../objects/userFlow';
 import { IFlow, IInputFlow } from '../objects/flow';
 import { IFlowItem, IInputFlowItem } from '../objects/flowItem';
 import { IFlowItemConnection, IInputFlowItemConnection } from '../objects/flowItemConnection';
@@ -36,18 +35,6 @@ export type Dive = {
   user: User;
   flow: Flow;
   createdAt: Scalars['Date'];
-};
-
-export type InputUserFlow = {
-  user: Scalars['ID'];
-  flow: Scalars['ID'];
-};
-
-export type UserFlow = {
-  __typename?: 'UserFlow';
-  _id: Scalars['ID'];
-  user: User;
-  flow: Flow;
 };
 
 
@@ -123,7 +110,8 @@ export type ItemFlowItemArgs = {
 };
 
 export enum ItemType {
-  Album = 'Album'
+  Album = 'Album',
+  YouTube = 'YouTube'
 }
 
 export type SearchItem = {
@@ -143,7 +131,7 @@ export type User = {
   __typename?: 'User';
   _id: Scalars['ID'];
   name: Scalars['String'];
-  flows: Array<Flow>;
+  dives: Array<Dive>;
 };
 
 export type InputUserItem = {
@@ -292,8 +280,6 @@ export type ResolversTypes = {
   InputDive: ResolverTypeWrapper<IInputDive>;
   ID: ResolverTypeWrapper<Scalars['ID']>;
   Dive: ResolverTypeWrapper<IDive>;
-  InputUserFlow: ResolverTypeWrapper<IInputUserFlow>;
-  UserFlow: ResolverTypeWrapper<IUserFlow>;
   Date: ResolverTypeWrapper<Scalars['Date']>;
   InputFlow: ResolverTypeWrapper<IInputFlow>;
   String: ResolverTypeWrapper<Scalars['String']>;
@@ -321,8 +307,6 @@ export type ResolversParentTypes = {
   InputDive: IInputDive;
   ID: Scalars['ID'];
   Dive: IDive;
-  InputUserFlow: IInputUserFlow;
-  UserFlow: IUserFlow;
   Date: Scalars['Date'];
   InputFlow: IInputFlow;
   String: Scalars['String'];
@@ -349,13 +333,6 @@ export type DiveResolvers<ContextType = GraphQLContext, ParentType = ResolversPa
   user?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
   flow?: Resolver<ResolversTypes['Flow'], ParentType, ContextType>;
   createdAt?: Resolver<ResolversTypes['Date'], ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
-
-export type UserFlowResolvers<ContextType = GraphQLContext, ParentType = ResolversParentTypes['UserFlow']> = {
-  _id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
-  user?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
-  flow?: Resolver<ResolversTypes['Flow'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -416,7 +393,7 @@ export type SearchItemResolvers<ContextType = GraphQLContext, ParentType = Resol
 export type UserResolvers<ContextType = GraphQLContext, ParentType = ResolversParentTypes['User']> = {
   _id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  flows?: Resolver<Array<ResolversTypes['Flow']>, ParentType, ContextType>;
+  dives?: Resolver<Array<ResolversTypes['Dive']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -445,7 +422,6 @@ export type MutationResolvers<ContextType = GraphQLContext, ParentType = Resolve
 
 export type Resolvers<ContextType = GraphQLContext> = {
   Dive?: DiveResolvers<ContextType>;
-  UserFlow?: UserFlowResolvers<ContextType>;
   Date?: GraphQLScalarType;
   Flow?: FlowResolvers<ContextType>;
   FlowItem?: FlowItemResolvers<ContextType>;

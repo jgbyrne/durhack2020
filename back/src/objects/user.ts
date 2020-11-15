@@ -1,4 +1,4 @@
-import {gql} from "apollo-server-express";
+import {ApolloError, gql} from "apollo-server-express";
 import {InputUser, User, UserResolvers} from "../generated/graphql";
 
 export const userTypes = gql`
@@ -7,12 +7,11 @@ export const userTypes = gql`
         name: String!
     }
 
-
     type User {
         _id: ID!
         name: String!
 
-        flows: [Flow!]!
+        dives: [Dive!]!
 
     }
 
@@ -21,4 +20,9 @@ export const userTypes = gql`
 export type IUser = Omit<User, "flows">; // define in terms of gql types
 export type IInputUser = InputUser;
 
-export const userResolvers: UserResolvers = {};
+export const userResolvers: UserResolvers = {
+    dives: async (user, _, {db}) =>
+        await db.collection("dives").find({user: user._id}).toArray() ?? (() => {
+            throw new ApolloError("Couldn't find Dives")
+        })(),
+};

@@ -10,12 +10,10 @@ import {itemResolvers, itemTypes} from "./objects/item";
 import {userResolvers, userTypes} from "./objects/user";
 import {userItemResolvers, userItemTypes} from "./objects/userItem";
 import {Resolvers} from "./generated/graphql";
-import {userFlowResolvers, userFlowTypes} from "./objects/userFlow";
 import {searchItemResolvers, searchItemTypes} from "./objects/searchItem";
 
 const typeDefs: DocumentNode[] = [
     diveTypes,
-    userFlowTypes,
     flowTypes,
     flowItemTypes,
     flowItemConnectionTypes,
@@ -35,7 +33,6 @@ const resolvers: Resolvers = {
     SearchItem: searchItemResolvers,
     User: userResolvers,
     UserItem: userItemResolvers,
-    UserFlow: userFlowResolvers,
 
     Query: queryResolver,
     Mutation: mutationResolver,

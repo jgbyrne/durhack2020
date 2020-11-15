@@ -27,18 +27,6 @@ export type Dive = {
   createdAt: Scalars['Date'];
 };
 
-export type InputUserFlow = {
-  user: Scalars['ID'];
-  flow: Scalars['ID'];
-};
-
-export type UserFlow = {
-  __typename?: 'UserFlow';
-  _id: Scalars['ID'];
-  user: User;
-  flow: Flow;
-};
-
 
 export type InputFlow = {
   name: Scalars['String'];
@@ -112,7 +100,8 @@ export type ItemFlowItemArgs = {
 };
 
 export enum ItemType {
-  Album = 'Album'
+  Album = 'Album',
+  YouTube = 'YouTube'
 }
 
 export type SearchItem = {
@@ -132,7 +121,7 @@ export type User = {
   __typename?: 'User';
   _id: Scalars['ID'];
   name: Scalars['String'];
-  flows: Array<Flow>;
+  dives: Array<Dive>;
 };
 
 export type InputUserItem = {

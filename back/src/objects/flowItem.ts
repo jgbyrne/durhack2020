@@ -33,4 +33,8 @@ export const flowItemResolvers: FlowItemResolvers = {
             throw new ApolloError("Failed to fetch for flowItem");
         }
     },
+    flow: async (flowItem, _, {db}) =>
+        await db.collection("flows").findOne({_id: flowItem.flow}) ?? (() => {
+            throw new ApolloError("Couldn't find Flow")
+        })(),
 };
