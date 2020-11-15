@@ -20,7 +20,7 @@ export const springLayout = (iterations: number,
                              rec: Record<string, Position>): Record<string, Position> => {
 
 
-    const lambda = 1 / iterations;
+    const lambda = 0.001;
 
     for (let i = 0; i < iterations; i++) {
         Object.keys(rec).forEach(k1 => Object.keys(rec).forEach(k2 => {
