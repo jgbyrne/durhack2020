@@ -80,7 +80,7 @@ export const FlowMap: FC<FlowMapProps> = props => {
     }))) as ItemProps[];
 
     const bind = useGesture({
-        onDrag: ({offset: [x, y], vxvy: [vx] }) =>
+        onDrag: ({offset: [x, y], vxvy: [vx]}) =>
             setCameraSpring({left: x, top: y}),
         onWheel: (state) => {
 
@@ -98,9 +98,11 @@ export const FlowMap: FC<FlowMapProps> = props => {
     });
 
     return <div {...bind()} className="FlowMap">
-        <div className="top-bar"><Brand/>
+        <div className="top-bar">
+            <Brand/>
             <SearchBar/>
-            <UserMenu/></div>
+            <UserMenu/>
+        </div>
 
         <ArrowButton direction={"Bottom"}/>
         <ArrowButton direction={"Left"}/>
