@@ -1,0 +1,9 @@
+version: "3"
+services:
+  mongo:
+    image: library/mongo:4.2.8
+    ports:
+      - 27017:27017
+    volumes:
+      - ./init:/docker-entrypoint-initdb.d/
+    command: --quiet

@@ -11,16 +11,8 @@ import ArrowButton from "./ui/ArrowButton";
 import {WholeFlowQuery} from "../generated/graphql";
 import {FlowItemConnectionComponent} from "./FlowItemConnection";
 
-type FlowItemConnection = {
-    _id: string,
-    from: string,
-    to: string
-}
-
 type FlowMapProps = & {
     flow: WholeFlowQuery["flow"]
-    // flowItemData: FlowItem[],
-    // flowItemConnectionData: FlowItemConnection[],
 };
 
 
@@ -69,11 +61,6 @@ export const FlowMap: FC<FlowMapProps> = props => {
         <ArrowButton direction={"Bottom"}/>
         <ArrowButton direction={"Left"}/>
         <ArrowButton direction={"Right"}/>
-
-        {props.flow.name}
-        {props.flow.description}
-        {props.flow.owner?.name}
-        {props.flow}
 
         <animated.div className={"FlowMap-inner"} style={springOffset}>
             {props.flow.flowItems.map((item, i) =>
