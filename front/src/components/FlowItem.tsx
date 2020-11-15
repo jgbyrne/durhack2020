@@ -14,7 +14,7 @@ const FlowItem: FC<LayoutFlowItem> = props => {
         <img src={props.thumbnail + "?" + Math.random().toString()}/>
         <div className="floaty-text">
             <div className="name">{props.name}</div>
-            <div>{props.description}</div>
+            <div className="description">{props.description}</div>
         </div>
     </div>;
 };

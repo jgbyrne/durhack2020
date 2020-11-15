@@ -6,4 +6,4 @@ import {Main} from "./Main";
 export const App = () =>
     <AppWrapper>
         <Main/>
-    </AppWrapper>
+    </AppWrapper>;
