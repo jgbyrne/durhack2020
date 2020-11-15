@@ -112,7 +112,7 @@ export const Main: FC<unknown> = () => {
 
         let update1 = update(example, {
             flowItems: a => [...a, newItem],
-            // flowConnections: a => [...a, newConnection],
+            flowConnections: a => [...a, newConnection],
         });
         setExample(update1)
     }

@@ -2,23 +2,30 @@ type BasicFlowItemConnection = { from: string, to: string };
 
 export type Position = { left: number, top: number }
 
-export const populate = (iterations: number, springLength = 400, ids: string[], width: number, height: number, connections: BasicFlowItemConnection[]): Record<string, Position> =>
+export const populate = (
+    ids: string[],
+    existing: Record<string, Position>,
+    width: number,
+    height: number
+): Record<string, Position> =>
     ids.reduce((acc, cur) => ({
         ...acc,
-        [cur]: {
-            left: Math.random() * 1000,
-            top: Math.random() * 1000
+        [cur]: existing[cur] ?? {
+            left: Math.random() * width,
+            top: Math.random() * height
         }
-    }), {} as Record<string, Position>);
+    }), {} as Record<string, Position>)
 
-export const springLayout = (iterations: number,
-                             springLength = 200,
-                             ids: string[],
-                             width: number,
-                             height: number,
-                             connections: BasicFlowItemConnection[],
-                             rec: Record<string, Position>): Record<string, Position> => {
 
+export const springLayout = (
+    iterations: number,
+    springLength = 200,
+    ids: string[],
+    width: number,
+    height: number,
+    connections: BasicFlowItemConnection[],
+    rec: Record<string, Position>
+): Record<string, Position> => {
 
     const lambda = 0.001;
 

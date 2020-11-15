@@ -14,7 +14,7 @@ export const LoginPanel: FC<unknown> = () => {
     return <div className="LoginPanel">
 
         <div className="background">
-            {[...Array(Math.floor(window.innerWidth * window.innerHeight / 1000))].map(e => <div></div>)};
+            {[...Array(Math.floor(window.innerWidth * window.innerHeight / 1000))].map((_, i) => <div key={i}/>)};
         </div>
         <div className="middle">
             <img className="logo" src={flowormLogo}/>
@@ -36,7 +36,8 @@ export const LoginPanel: FC<unknown> = () => {
                 <button
                     type="button"
                     onClick={submit}
-                >Sign in</button>
+                >Sign in
+                </button>
             </form>
         </div>
 

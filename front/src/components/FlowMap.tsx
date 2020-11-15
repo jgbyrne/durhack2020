@@ -1,9 +1,9 @@
 import {FlowItemComponent} from "./FlowItemComponent"
 import React, {FC, useEffect, useMemo, useState} from 'react';
 import './FlowMap.css';
-import {Position, randomLayout, springLayout} from "../logic/layout";
+import {populate, Position, randomLayout, springLayout} from "../logic/layout";
 import {useGesture} from 'react-use-gesture'
-import {animated, useSpring, useSprings} from 'react-spring'
+import {animated, useSpring, useSprings, useTransition} from 'react-spring'
 import SearchBar from "./ui/SearchBar";
 import UserMenu from "./ui/UserMenu";
 import Brand from "./ui/Brand";
@@ -26,6 +26,8 @@ type OffsetSpring = {
 
 export const FlowMap: FC<FlowMapProps> = props => {
 
+    type Item = FlowMapProps["flow"]["flowItems"][number]
+
     const [cameraSpring, setCameraSpring] = useSpring((): OffsetSpring => ({
         left: 0,
         top: 0,
@@ -41,6 +43,15 @@ export const FlowMap: FC<FlowMapProps> = props => {
     const {width, height} = useWindowSize()
 
     const itemIds = useMemo(() => props.flow.flowItems.map(it => it._id), [props.flow.flowItems])
+    const itemByIds = useMemo(() =>
+        props.flow.flowItems.reduce(
+            (acc, cur): Record<string, Item> => ({
+                ...acc,
+                [cur._id]: cur,
+            }),
+            {} as Record<string, Item>
+        ), [props.flow.flowItems]
+    )
 
     const [itemPositions, setItemPositions] = useState(() =>
         randomLayout(
@@ -51,13 +62,19 @@ export const FlowMap: FC<FlowMapProps> = props => {
     )
 
     useEffect(() => {
-        setItemPositions(springLayout(10, 400, itemIds, width, height, props.flow.flowConnections.map(it => ({
+        setItemPositions(springLayout(4, 200, itemIds, width, height, props.flow.flowConnections.map(it => ({
             from: it.from._id,
             to: it.from._id
-        }))))
-    }, [props.flow.flowItems])
+        })), populate(itemIds, itemPositions, width, height)))
+    }, [props.flow.flowItems.length])
 
-    // const springs = useSprings<Position, Position>(0, itemPositions)
+
+    type ItemProps = { left: number, top: number }
+
+    const springs = useSprings(itemIds.length, itemIds.map((item): ItemProps => ({
+        left: itemPositions[item]?.left ?? 0,
+        top: itemPositions[item]?.top ?? 0
+    }))) as ItemProps[];
 
     const bind = useGesture({
         onDrag: ({offset: [x, y], vxvy: [vx]}) =>
@@ -77,9 +94,6 @@ export const FlowMap: FC<FlowMapProps> = props => {
 
     });
 
-    let indicesFrom = props.flow.flowConnections.map(c => props.flow.flowItems.findIndex(a => c.from._id === a._id));
-    let indicesTo = props.flow.flowConnections.map(c => props.flow.flowItems.findIndex(a => c.to._id === a._id));
-
     return <div {...bind()} className="FlowMap">
         <div className="top-bar"><Brand/>
             <SearchBar/>
@@ -90,26 +104,25 @@ export const FlowMap: FC<FlowMapProps> = props => {
         <ArrowButton direction={"Right"}/>
 
         <animated.div className={"FlowMap-inner"} style={cameraSpring}>
-            {props.flow.flowItems.map((item, i) =>
+            {itemIds.map((id, i) =>
                 <FlowItemComponent
                     key={i}
-                    {...item}
-                    {...item.item}
-
-                    left={0}
-                    top={0}
+                    {...itemByIds[id]}
+                    {...itemByIds[id].item}
+                    {...springs[i]}
                 />
             )}
+
             {props.flow.flowConnections.map((a, i) =>
-                <div>asd</div>
-                /*<FlowItemConnectionComponent
+                <FlowItemConnectionComponent
                     key={i}
-                    fromX={itemPositions[indicesFrom[i]].left}
-                    toX={itemPositions[indicesTo[i]].left}
-                    fromY={itemPositions[indicesFrom[i]].top}
-                    toY={itemPositions[indicesTo[i]].top}
-                />*/
+                    fromX={itemPositions[a.from._id]?.left ?? 0}
+                    fromY={itemPositions[a.from._id]?.top ?? 0}
+                    toX={itemPositions[a.to._id]?.left ?? 0}
+                    toY={itemPositions[a.to._id]?.top ?? 0}
+                />
             )}
+
         </animated.div>
     </div>;
 };
