@@ -26,14 +26,14 @@ if (!process.env.MONGO_URL) {
 
 const database = new MongoClient(process.env.MONGO_URL);
 
-export type MongoContext = { mongo: any } //todo
-
+export type MongoContext = { mongo: MongoClient } 
 export type GraphQLContext = ExpressContext & MongoContext
+
 const apolloServer = new ApolloServer({
     schema: gqlSchema,
     context: async (context): Promise<GraphQLContext> => ({
         ...context,
-        ...{mongo: await database},
+        ...{mongo: await (async () => { await database.connect(); return database; })()},
     }),
 });
 apolloServer.applyMiddleware({app, path: "/graphql"});
@@ -42,9 +42,11 @@ if (!process.env.PORT) {
     console.warn("env.PORT is not defined, defaulting to 4000");
 }
 
+if (!process.env.CONTENT_SRV_URL) {
+    console.error("env.CONTENT_SRV_URL is not defined!");
+}
+
 const port = process.env.PORT || 4000;
 app.listen(port, () => {
     console.log(`Starting server on port ${port}`);
 });
-
-
