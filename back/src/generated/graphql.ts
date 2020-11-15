@@ -216,7 +216,7 @@ export type MutationCreateItemArgs = {
 
 
 export type MutationCreateUserArgs = {
-  user?: Maybe<InputUser>;
+  user: Maybe<InputUser>;
 };
 
 

@@ -1,5 +1,6 @@
-import {gql} from "apollo-server-express";
+import {ApolloError, gql} from "apollo-server-express";
 import {InputUserItem, Scalars, UserItem, UserItemResolvers} from "../generated/graphql";
+import {IUser} from "./user";
 
 export const userItemTypes = gql`
 
@@ -26,11 +27,12 @@ export type IUserItem = Omit<UserItem, "user" | "item"> & { user: Scalars["ID"],
 export type IInputUserItem = InputUserItem
 
 export const userItemResolvers: UserItemResolvers = {
-    user: async (userItem, _, {mongo}) => {
-        return await mongo.db("app_db").collection("users").findOne({_id : userItem.user});
-    },
-
-    item: async (userItem, _, {mongo}) => {
+    user: async (userItem, _, {mongo}) =>
+        await mongo
+            .db("app_db")
+            .collection("users")
+            .findOne({_id: userItem.user}) as IUser,
+    item: async userItem => {
         const url = `${process.env.CONTENT_SRV_URL}/item/${userItem.item}`;
         const request = await fetch(url)
 
