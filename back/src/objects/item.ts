@@ -31,8 +31,8 @@ export const itemTypes = gql`
 
     enum ItemType {
         Album
+        YouTube
         #    Song
-        #    YouTube
     }
 
 `;

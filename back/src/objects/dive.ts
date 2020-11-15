@@ -1,4 +1,4 @@
-import {gql} from "apollo-server-express";
+import {ApolloError, gql} from "apollo-server-express";
 import {Dive, DiveResolvers, InputDive, Scalars} from "../generated/graphql";
 import {IUser} from "./user";
 
@@ -27,7 +27,8 @@ export type IDive = Omit<Dive, "user" | "flow"> & { user: Scalars["ID"], flow: S
 export type IInputDive = InputDive;
 
 export const diveResolvers: DiveResolvers = {
-    // user: async (dive, _, {db}) => {
-    //     return await db.collection("users").findOne({_id: dive.user});
-    // },
+    user: async (dive, _, {db}) =>
+        await db.collection("users").findOne({_id: dive.user}) ?? (() => {
+            throw new ApolloError("Couldn't find")
+        })(),
 }

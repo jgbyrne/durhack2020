@@ -14,22 +14,22 @@ export type Scalars = {
 };
 
 export type InputDive = {
-  user?: Maybe<Scalars['ID']>;
-  flow?: Maybe<Scalars['ID']>;
+  user: Scalars['ID'];
+  flow: Scalars['ID'];
   createdAt: Scalars['Date'];
 };
 
 export type Dive = {
   __typename?: 'Dive';
   _id: Scalars['ID'];
-  user?: Maybe<User>;
-  flow?: Maybe<Flow>;
+  user: User;
+  flow: Flow;
   createdAt: Scalars['Date'];
 };
 
 export type InputUserFlow = {
-  user?: Maybe<Scalars['ID']>;
-  flow?: Maybe<Scalars['ID']>;
+  user: Scalars['ID'];
+  flow: Scalars['ID'];
 };
 
 export type UserFlow = {
@@ -60,8 +60,8 @@ export type Flow = {
 };
 
 export type InputFlowItem = {
-  flow?: Maybe<Scalars['ID']>;
-  item?: Maybe<Scalars['ID']>;
+  flow: Scalars['ID'];
+  item: Scalars['ID'];
 };
 
 export type FlowItem = {
@@ -81,7 +81,7 @@ export type InputFlowItemConnection = {
 export type FlowItemConnection = {
   __typename?: 'FlowItemConnection';
   _id: Scalars['ID'];
-  flow?: Maybe<Flow>;
+  flow: Flow;
   description: Scalars['String'];
   from: FlowItem;
   to: FlowItem;
@@ -125,14 +125,14 @@ export type SearchItem = {
 };
 
 export type InputUser = {
-  name?: Maybe<Scalars['String']>;
+  name: Scalars['String'];
 };
 
 export type User = {
   __typename?: 'User';
-  _id?: Maybe<Scalars['ID']>;
-  name?: Maybe<Scalars['String']>;
-  flows?: Maybe<Array<Maybe<Flow>>>;
+  _id: Scalars['ID'];
+  name: Scalars['String'];
+  flows: Array<Flow>;
 };
 
 export type InputUserItem = {

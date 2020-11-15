@@ -1,6 +1,6 @@
-import {gql} from "apollo-server-express";
-import {Flow, InputFlow, Scalars, UserFlow, UserFlowResolvers} from "../generated/graphql";
-import {IUser} from "./user";
+import {ApolloError, gql} from "apollo-server-express";
+import {InputFlow, Scalars, UserFlow, UserFlowResolvers} from "../generated/graphql";
+
 
 export const userFlowTypes = gql`
 
@@ -20,7 +20,8 @@ export type IUserFlow = Omit<UserFlow, "user" | "flow"> & { user: Scalars["ID"],
 export type IInputUserFlow = InputFlow;
 
 export const userFlowResolvers: UserFlowResolvers = {
-    // user: async (userFlow, _, {mongo}) => {
-    //     return await mongo.db("app_db").collection("users").findOne({_id: userFlow.user});
-    // },
+    user: async (userFlow, _, {db}) =>
+        await db.collection("users").findOne({_id: userFlow.user}) ?? (() => {
+            throw new ApolloError("Couldn't insert")
+        })(),
 };

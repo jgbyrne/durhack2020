@@ -25,22 +25,22 @@ export type Scalars = {
 };
 
 export type InputDive = {
-  user?: Maybe<Scalars['ID']>;
-  flow?: Maybe<Scalars['ID']>;
+  user: Scalars['ID'];
+  flow: Scalars['ID'];
   createdAt: Scalars['Date'];
 };
 
 export type Dive = {
   __typename?: 'Dive';
   _id: Scalars['ID'];
-  user?: Maybe<User>;
-  flow?: Maybe<Flow>;
+  user: User;
+  flow: Flow;
   createdAt: Scalars['Date'];
 };
 
 export type InputUserFlow = {
-  user?: Maybe<Scalars['ID']>;
-  flow?: Maybe<Scalars['ID']>;
+  user: Scalars['ID'];
+  flow: Scalars['ID'];
 };
 
 export type UserFlow = {
@@ -71,8 +71,8 @@ export type Flow = {
 };
 
 export type InputFlowItem = {
-  flow?: Maybe<Scalars['ID']>;
-  item?: Maybe<Scalars['ID']>;
+  flow: Scalars['ID'];
+  item: Scalars['ID'];
 };
 
 export type FlowItem = {
@@ -92,7 +92,7 @@ export type InputFlowItemConnection = {
 export type FlowItemConnection = {
   __typename?: 'FlowItemConnection';
   _id: Scalars['ID'];
-  flow?: Maybe<Flow>;
+  flow: Flow;
   description: Scalars['String'];
   from: FlowItem;
   to: FlowItem;
@@ -136,14 +136,14 @@ export type SearchItem = {
 };
 
 export type InputUser = {
-  name?: Maybe<Scalars['String']>;
+  name: Scalars['String'];
 };
 
 export type User = {
   __typename?: 'User';
-  _id?: Maybe<Scalars['ID']>;
-  name?: Maybe<Scalars['String']>;
-  flows?: Maybe<Array<Maybe<Flow>>>;
+  _id: Scalars['ID'];
+  name: Scalars['String'];
+  flows: Array<Flow>;
 };
 
 export type InputUserItem = {
@@ -302,7 +302,7 @@ export type ResolversTypes = {
   InputFlowItem: ResolverTypeWrapper<IInputFlowItem>;
   FlowItem: ResolverTypeWrapper<IFlowItem>;
   InputFlowItemConnection: InputFlowItemConnection;
-  FlowItemConnection: ResolverTypeWrapper<Omit<FlowItemConnection, 'flow' | 'from' | 'to'> & { flow?: Maybe<ResolversTypes['Flow']>, from: ResolversTypes['FlowItem'], to: ResolversTypes['FlowItem'] }>;
+  FlowItemConnection: ResolverTypeWrapper<Omit<FlowItemConnection, 'flow' | 'from' | 'to'> & { flow: ResolversTypes['Flow'], from: ResolversTypes['FlowItem'], to: ResolversTypes['FlowItem'] }>;
   InputItem: ResolverTypeWrapper<IInputItem>;
   Item: ResolverTypeWrapper<IItem>;
   ItemType: ItemType;
@@ -331,7 +331,7 @@ export type ResolversParentTypes = {
   InputFlowItem: IInputFlowItem;
   FlowItem: IFlowItem;
   InputFlowItemConnection: InputFlowItemConnection;
-  FlowItemConnection: Omit<FlowItemConnection, 'flow' | 'from' | 'to'> & { flow?: Maybe<ResolversParentTypes['Flow']>, from: ResolversParentTypes['FlowItem'], to: ResolversParentTypes['FlowItem'] };
+  FlowItemConnection: Omit<FlowItemConnection, 'flow' | 'from' | 'to'> & { flow: ResolversParentTypes['Flow'], from: ResolversParentTypes['FlowItem'], to: ResolversParentTypes['FlowItem'] };
   InputItem: IInputItem;
   Item: IItem;
   SearchItem: ISearchItem;
@@ -346,8 +346,8 @@ export type ResolversParentTypes = {
 
 export type DiveResolvers<ContextType = GraphQLContext, ParentType = ResolversParentTypes['Dive']> = {
   _id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
-  user?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>;
-  flow?: Resolver<Maybe<ResolversTypes['Flow']>, ParentType, ContextType>;
+  user?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
+  flow?: Resolver<ResolversTypes['Flow'], ParentType, ContextType>;
   createdAt?: Resolver<ResolversTypes['Date'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
@@ -384,7 +384,7 @@ export type FlowItemResolvers<ContextType = GraphQLContext, ParentType = Resolve
 
 export type FlowItemConnectionResolvers<ContextType = GraphQLContext, ParentType = ResolversParentTypes['FlowItemConnection']> = {
   _id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
-  flow?: Resolver<Maybe<ResolversTypes['Flow']>, ParentType, ContextType>;
+  flow?: Resolver<ResolversTypes['Flow'], ParentType, ContextType>;
   description?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   from?: Resolver<ResolversTypes['FlowItem'], ParentType, ContextType>;
   to?: Resolver<ResolversTypes['FlowItem'], ParentType, ContextType>;
@@ -414,9 +414,9 @@ export type SearchItemResolvers<ContextType = GraphQLContext, ParentType = Resol
 };
 
 export type UserResolvers<ContextType = GraphQLContext, ParentType = ResolversParentTypes['User']> = {
-  _id?: Resolver<Maybe<ResolversTypes['ID']>, ParentType, ContextType>;
-  name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  flows?: Resolver<Maybe<Array<Maybe<ResolversTypes['Flow']>>>, ParentType, ContextType>;
+  _id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  flows?: Resolver<Array<ResolversTypes['Flow']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 

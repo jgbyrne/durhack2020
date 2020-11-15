@@ -27,9 +27,10 @@ export type IUserItem = Omit<UserItem, "user" | "item"> & { user: Scalars["ID"],
 export type IInputUserItem = InputUserItem;
 
 export const userItemResolvers: UserItemResolvers = {
-    // user: async (userItem, _, {mongo}) => {
-    //     return await mongo.db("app_db").collection("users").findOne({_id : userItem.user});
-    // },
+    user: async (userItem, _, {db}) =>
+        await db.collection("users").findOne({_id: userItem.user}) ?? (() => {
+            throw new ApolloError("Couldn't insert")
+        })(),
 
     item: async (userItem, _, {db}) => {
         const url = `${process.env.CONTENT_SRV_URL}/item/${userItem.item}`;

@@ -45,13 +45,15 @@ export const queryResolver: QueryResolvers = {
             throw new ApolloError("Failed to search")
         }
     },
-    // user: async (_, {_id}, {db}) => {
-    // 	return await db.collection("users").findOne({_id});
-    // }
+    user: async (_, {_id}, {db}) =>
+        await db.collection("users").findOne({_id}) ?? (() => {
+            throw new ApolloError("Couldn't find")
+        })(),
 };
 
 export const mutationResolver: MutationResolvers = {
-    // createUser: async (_, {user}, {db}) => {
-    //     return await db.collection("users").insertOne({name: user?.name});
-    // }
+    createUser: async (_, {user}, {db}) =>
+        (await db.collection("users").insertOne({name: user?.name}))?.ops[0] ?? (() => {
+            throw new ApolloError("Couldn't insert")
+        })()
 };
