@@ -25,24 +25,27 @@ export const springLayout = (iterations: number,
     for (let i = 0; i < iterations; i++) {
         Object.keys(rec).forEach(k1 => Object.keys(rec).forEach(k2 => {
             if (k1 != k2) {
+                const sprung = connections.findIndex(c => c.from === k1 && c.to === k2) !== -1;
+
                 let dx = rec[k1].left - rec[k2].left;
                 let dy = rec[k1].top - rec[k2].top;
 
                 let d = Math.sqrt(dx * dx + dy * dy);
                 let a = Math.atan2(dy, dx);
 
-                let dd = springLength - d;
+                let dd;
+                if (sprung) {
+                    dd = springLength - d;
+                } else {
+                    dd = d;
+                }
 
                 let cx = dd * Math.cos(a) * lambda;
                 let cy = dd * Math.sin(a) * lambda;
 
-                if (connections.findIndex(c => c.from === k1 && c.to === k2) !== -1) {
-                    rec[k1].left += cx;
-                    rec[k1].top += cy;
-                } else {
-                    rec[k1].left -= cx;
-                    rec[k1].top -= cy;
-                }
+                rec[k1].left += cx;
+                rec[k1].top += cy;
+
             }
         }));
     }
