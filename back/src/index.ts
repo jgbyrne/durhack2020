@@ -24,6 +24,10 @@ if (!process.env.MONGO_URL) {
     throw new Error("env.MONGO_URL is undefined, please configure the environment variables");
 }
 
+if (!process.env.CONTENT_SRV_URL) {
+    throw new Error("env.CONTENT_SRV_URL is undefined!");
+}
+
 const database = new MongoClient(process.env.MONGO_URL);
 
 export type MongoContext = { mongo: MongoClient } 
