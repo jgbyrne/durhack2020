@@ -65,9 +65,9 @@ export const FlowMap: FC<FlowMapProps> = props => {
 
     useEffect(() => {
 
-        setItemPositions(springLayout(100, 300, itemIds, width, height, props.flow.flowItemConnections.map(it => ({
+        setItemPositions(springLayout(1000, 400, itemIds, width, height, props.flow.flowItemConnections.map(it => ({
             from: it.from._id,
-            to: it.from._id
+            to: it.to._id
         })), populate(itemIds, itemPositions, width, height)))
 
     }, [props.flow.flowItems.length])
